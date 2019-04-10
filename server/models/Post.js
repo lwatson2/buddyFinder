@@ -4,7 +4,6 @@ const PostSchema = new mongoose.Schema({
   name: { type: String, trim: true },
   title: { type: String, trim: true },
   time: { type: String, trim: true },
-  system: { type: String },
   groupLimit: Number,
   currentGroupMembers: Number,
   gameName: { type: String, trim: true },

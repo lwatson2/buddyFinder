@@ -4,6 +4,7 @@ const userSchema = new mongoose.Schema({
   username: { type: String, trim: true },
   password: { type: String },
   gamertag: { type: String },
+  system: { type: String },
   created_at: { type: Date, default: Date.now() }
 });
 

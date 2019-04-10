@@ -1,11 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const Post = require("../models/Post");
 
-router.get("/newpost", (req, res) => {
-  console.log("test");
-  res.json({
-    msg: "hi"
-  });
-});
+router.post("/newpost", (req, res) => {});
 
 module.exports = router;
