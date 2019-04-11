@@ -4,6 +4,8 @@ To run this app locally clone this repo
 
 cd into `budddyfinder`
 
+cd into `server`
+
 run `npm run dev`
 
 visit localhost:3000
