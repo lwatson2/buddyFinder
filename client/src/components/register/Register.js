@@ -17,50 +17,65 @@ const Register = () => {
       <div className="form-wrapper">
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label className="formLabel" htmlFor="username">
+              Username
+            </label>
             <input
-              className={`input ${errors.username && "errorDiv"}`}
+              className={errors.username ? "errorDiv" : "formInput"}
               value={values.username || ""}
               onChange={handleChange}
-              placeholder="User Name"
+              placeholder="Please enter your username"
               type="text"
               id="username"
               name="username"
             />
-            {errors.username && <p>{errors.username}</p>}
+            {errors.username && (
+              <p className="registerErrorMessage">{errors.username}</p>
+            )}
           </div>
           <div className="form-group">
-            <label htmlFor="password">Password</label>
+            <label className="formLabel" htmlFor="password">
+              Password
+            </label>
             <input
-              className={`input ${errors.password && "errorDiv"}`}
+              className={errors.password ? "errorDiv" : "formInput"}
               value={values.password || ""}
               onChange={handleChange}
-              placeholder="Password"
+              placeholder="Please enter your password"
               type="password"
               id="password"
               name="password"
             />
-            {errors.password && <p>{errors.password}</p>}
+            {errors.password && (
+              <p className="registerErrorMessage">{errors.password}</p>
+            )}
           </div>
           <div className="form-group">
-            <label htmlFor="gamertag">Gamertag</label>
+            <label className="formLabel" htmlFor="gamertag">
+              Gamertag
+            </label>
             <input
-              className={`input ${errors.gamertag && "errorDiv"}`}
+              className={errors.gamertag ? "errorDiv" : "formInput"}
               value={values.gamertag || ""}
               onChange={handleChange}
-              placeholder="Gamertag"
+              placeholder="Please enter your gamertag"
               type="text"
               id="gamertag"
               name="gamertag"
             />
-            {errors.gamertag && <p>{errors.gamertag}</p>}
+            {errors.gamertag && (
+              <p className="registerErrorMessage">{errors.gamertag}</p>
+            )}
           </div>
-          <div className="form-group">
-            <label htmlFor="system">What system do you play on?</label>
+          <div className="formSelectGroup">
+            <label className="selectLabel" htmlFor="system">
+              What system do you play on?
+            </label>
             <select
+              className="selectButton"
               value={values.system || ""}
               onChange={handleSubmit}
-              placeholder="System"
+              placeholder="system"
               type="text"
               id="system"
               name="system"
