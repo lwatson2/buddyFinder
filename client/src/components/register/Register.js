@@ -87,7 +87,9 @@ const Register = () => {
             </select>
           </div>
 
-          <button type="submit">Submit</button>
+          <button className="registerSubmitBtn" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     </div>
