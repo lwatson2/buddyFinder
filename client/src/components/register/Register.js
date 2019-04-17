@@ -21,7 +21,7 @@ const Register = () => {
               Username
             </label>
             <input
-              className={errors.username ? "errorDiv" : "formInput"}
+              className="formInput"
               value={values.username || ""}
               onChange={handleChange}
               placeholder="Please enter your username"
@@ -38,7 +38,7 @@ const Register = () => {
               Password
             </label>
             <input
-              className={errors.password ? "errorDiv" : "formInput"}
+              className="formInput"
               value={values.password || ""}
               onChange={handleChange}
               placeholder="Please enter your password"
@@ -55,7 +55,7 @@ const Register = () => {
               Gamertag
             </label>
             <input
-              className={errors.gamertag ? "errorDiv" : "formInput"}
+              className="formInput"
               value={values.gamertag || ""}
               onChange={handleChange}
               placeholder="Please enter your gamertag"

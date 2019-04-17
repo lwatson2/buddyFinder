@@ -1,34 +1,11 @@
-.registerSubmitBtn {
-  cursor: pointer;
-  margin-bottom: 14px;
-  border: none;
-  background: hsl(196, 94%, 67%);
-  border-radius: 10px;
-  height: 37px;
-  color: hsl(210, 20%, 25%);
-  width: 84px;
-  font-size: 17px;
-  -webkit-box-shadow: inset 0 1px 0 hsl(196, 94%, 76%),
-    0 1px 3px hsla(0, 0%, 0%, 0.2);
-  box-shadow: inset 0 1px 0 hsl(196, 94%, 76%), 0 1px 3px hsla(0, 0%, 0%, 0.2);
-  -webkit-transition: all 0.4s ease-in;
-  transition: all 0.4s ease-in;
-}
-.registerSubmitBtn:hover {
-  background: hsl(196, 86%, 50%);
-  -webkit-box-shadow: inset 0 1px 0 hsl(196, 86%, 50%),
-    0 1px 3px hsla(0, 0%, 0%, 0.2);
-  box-shadow: inset 0 1px 0 hsl(196, 86%, 50%), 0 1px 3px hsla(0, 0%, 0%, 0.2);
-}
-.form-wrapper {
+.loginWrapper {
+  height: 350px;
   border-radius: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  width: 400px;
+  width: 350px;
   background: hsl(209, 14%, 37%);
-  -ms-flex-preferred-size: 100;
-  flex-basis: 100;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
@@ -42,7 +19,7 @@
   -webkit-box-shadow: 0 15px 35px hsla(0, 0%, 0%, 0.2);
   box-shadow: 0 15px 35px hsla(0, 0%, 0%, 0.2);
 }
-.container {
+.loginContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -54,7 +31,13 @@
   align-items: center;
   height: 100vh;
 }
-.form-group {
+.loginLabel {
+  text-align: left;
+  padding-bottom: 10px;
+  color: hsl(210, 15%, 91%);
+}
+
+.loginGroupWrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -64,12 +47,7 @@
   flex-direction: column;
   padding: 13px;
 }
-.formLabel {
-  text-align: left;
-  padding-bottom: 10px;
-  color: hsl(210, 15%, 91%);
-}
-.formInput {
+.loginFormInput {
   border: 1px solid transparent;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -85,25 +63,27 @@
   transition: all 0.3s;
   background: hsl(209, 20%, 25%);
 }
-.formInput:focus {
+.loginFormInput:focus {
   border: 1px solid hsl(197, 97%, 75%);
 }
-
-.formSelectGroup {
-  padding: 10px;
-}
-.selectLabel {
-  padding-right: 14px;
-  color: hsl(210, 15%, 91%);
-}
-.selectButton {
-  border-radius: 6px;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  border: 2px solid hsl(196, 94%, 67%);
-  margin: 0;
-  font-size: 14px;
-  font-weight: 700;
-  padding-right: 23px;
+.loginSubmitBtn {
   cursor: pointer;
+  border: none;
+  background: hsl(196, 94%, 67%);
+  border-radius: 10px;
+  height: 37px;
+  color: hsl(210, 20%, 25%);
+  width: 84px;
+  font-size: 17px;
+  -webkit-box-shadow: inset 0 1px 0 hsl(196, 94%, 76%),
+    0 1px 3px hsla(0, 0%, 0%, 0.2);
+  box-shadow: inset 0 1px 0 hsl(196, 94%, 76%), 0 1px 3px hsla(0, 0%, 0%, 0.2);
+  -webkit-transition: all 0.4s ease-in;
+  transition: all 0.4s ease-in;
+}
+.loginSubmitBtn:hover {
+  background: hsl(196, 86%, 50%);
+  -webkit-box-shadow: inset 0 1px 0 hsl(196, 86%, 50%),
+    0 1px 3px hsla(0, 0%, 0%, 0.2);
+  box-shadow: inset 0 1px 0 hsl(196, 86%, 50%), 0 1px 3px hsla(0, 0%, 0%, 0.2);
 }
