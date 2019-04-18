@@ -4,9 +4,7 @@ import validate from "../helpers/LoginFormValidationRules";
 import "./Login.css";
 
 const Login = () => {
-  const handleLogin = () => {
-    console.log("object");
-  };
+  const handleLogin = () => {};
   const { values, handleChange, handleSubmit, errors } = useForm(
     handleLogin,
     validate
@@ -14,7 +12,10 @@ const Login = () => {
   return (
     <div className="loginContainer">
       <div className="loginWrapper">
-        <form onSubmit={handleSubmit}>
+        {sessionStorage.getItem("isAuth") && (
+          <span className="successMsg">Success! You may now login.</span>
+        )}
+        <form className="loginFormContainer" onSubmit={handleSubmit}>
           <div className="loginGroupWrapper">
             <label className="loginLabel" htmlFor="username">
               {" "}

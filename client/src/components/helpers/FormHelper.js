@@ -8,6 +8,7 @@ const useForm = (callback, validate) => {
     // Checks to make sure errors object is empty and isSubmitting is true
     if (Object.keys(errors).length === 0 && isSubmitting) {
       callback();
+      setValues({});
     }
   }, [errors]);
 
@@ -15,7 +16,6 @@ const useForm = (callback, validate) => {
     if (event) event.preventDefault();
     setIsSubmitting(true);
     setErrors(validate(values));
-    callback();
   };
 
   const handleChange = event => {

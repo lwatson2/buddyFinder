@@ -2,14 +2,18 @@ import React from "react";
 import useForm from "../helpers/FormHelper";
 import validate from "../helpers/RegisterFormValidationRules";
 import "./Register.css";
+import axios from "axios";
+import { withRouter } from "react-router";
 
-const Register = () => {
-  const login = () => {
-    console.log(values);
-    console.log(errors);
+const Register = props => {
+  const handleRegister = async () => {
+    /*  const res = await axios.post("/users/register", values);
+    console.log(res.data); */
+    sessionStorage.setItem("isAuth", true);
+    props.history.push("/login");
   };
   const { values, handleChange, handleSubmit, errors } = useForm(
-    login,
+    handleRegister,
     validate
   );
   return (
@@ -74,7 +78,7 @@ const Register = () => {
             <select
               className="selectButton"
               value={values.system || ""}
-              onChange={handleSubmit}
+              onChange={handleChange}
               placeholder="system"
               type="text"
               id="system"
@@ -96,4 +100,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default withRouter(Register);

@@ -14,10 +14,16 @@
   align-items: center;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-  -ms-flex-direction: row;
-  flex-direction: row;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-shadow: 0 15px 35px hsla(0, 0%, 0%, 0.2);
   box-shadow: 0 15px 35px hsla(0, 0%, 0%, 0.2);
+}
+.loginFormContainer {
+  width: 100%;
+}
+.successMsg {
+  color: #32cd32;
 }
 .loginContainer {
   display: -webkit-box;
