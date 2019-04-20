@@ -5,8 +5,51 @@ const jwt = require("jsonwebtoken");
 const passport = require("passport");
 const { verifyToken } = require("../config/jwt");
 const User = require("../models/User");
+const LocalStrategy = require("passport-local").Strategy;
 
 const saltRounds = 10;
+
+// Local Strategy for passport
+passport.use(
+  new LocalStrategy(
+    {
+      usernameField: "username"
+    },
+    (username, password, done) => {
+      //Match user
+      User.findOne({ username: username })
+        .then(user => {
+          if (!user) {
+            return done(null, false, {
+              message: "That username is not registered."
+            });
+          }
+
+          //Match password
+          bcrypt.compare(password, user.password, (err, isMatch) => {
+            if (err) {
+              err;
+            }
+            if (isMatch) {
+              return done(null, user);
+            } else {
+              return done(null, false, { message: "Password is incorrect." });
+            }
+          });
+        })
+        .catch(err => err);
+    }
+  )
+);
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
+
 //Registers user
 router.post("/register", (req, res) => {
   const { username, password, gamertag, system } = req.body;
@@ -45,10 +88,12 @@ router.post("/register", (req, res) => {
 });
 
 // Route for user to login
-router.post("/login", (req, res) => {
-  // passport uses the local strategy in the /config/passport file
+router.post("/login", (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {
+    // passport uses the local strategy in the /config/passport file
+
     if (user) {
+      console.log("true");
       // If there's a user sign a jsonwebtoken with their creds and send that back to the client
       jwt.sign({ user }, "mysecretkey", { expiresIn: "1d" }, (err, token) => {
         res.json({
@@ -57,11 +102,12 @@ router.post("/login", (req, res) => {
         });
       });
     } else {
+      console.log("fasle");
       res.json({
         err: info
       });
     }
-  })(req, res);
+  })(req, res, next);
 });
 
 router.get("/logout", (req, res) => {

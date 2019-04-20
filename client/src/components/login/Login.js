@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import useForm from "../helpers/FormHelper";
 import validate from "../helpers/LoginFormValidationRules";
 import "./Login.css";
+import axios from "axios";
 
-const Login = () => {
-  const handleLogin = () => {};
+const Login = props => {
+  const [loginErr, setLoginErr] = useState("");
+  const handleLogin = async () => {
+    const res = await axios.post("/users/login", values);
+
+    if (res.data.err) {
+      setLoginErr(res.data.err.message);
+    }
+    sessionStorage.setItem("token", res.data.token);
+    sessionStorage.setItem("username", res.data.username);
+    props.history.push("/");
+  };
   const { values, handleChange, handleSubmit, errors } = useForm(
     handleLogin,
     validate
@@ -15,6 +26,7 @@ const Login = () => {
         {sessionStorage.getItem("isAuth") && (
           <span className="successMsg">Success! You may now login.</span>
         )}
+        {loginErr && <span className="loginErrorMessage">{loginErr}</span>}
         <form className="loginFormContainer" onSubmit={handleSubmit}>
           <div className="loginGroupWrapper">
             <label className="loginLabel" htmlFor="username">
