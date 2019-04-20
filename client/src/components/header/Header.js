@@ -9,14 +9,22 @@ function Header(props) {
       className={showNav ? "navContainer" : "navContainer navContaierClosed"}
     >
       {showNav ? (
-        <span onClick={() => setshowNav(!showNav)}>X</span>
+        <span className="navBarCloseBtn" onClick={() => setshowNav(!showNav)}>
+          X
+        </span>
       ) : (
-        <button onClick={() => setshowNav(!showNav)}>test</button>
+        <button className="navBarOpenBtn" onClick={() => setshowNav(!showNav)}>
+          <FontAwesomeIcon icon="bars" />
+        </button>
       )}
-      <button>Home</button>
-      <button>Login</button>
-      <button>Create new post</button>
-      <button>My profile</button>
+      <div
+        className={showNav ? " mainNavContainer active" : "mainNavContainer"}
+      >
+        <button>Home</button>
+        <button>Login</button>
+        <button>Create new post</button>
+        <button>My profile</button>
+      </div>
     </nav>
   );
 }
