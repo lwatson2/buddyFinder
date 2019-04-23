@@ -3,6 +3,7 @@ import useForm from "../helpers/FormHelper";
 import validate from "../helpers/LoginFormValidationRules";
 import "./Login.css";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const Login = props => {
   const [loginErr, setLoginErr] = useState("");
@@ -68,6 +69,14 @@ const Login = props => {
             Submit
           </button>
         </form>
+        <div className="registerLink">
+          <span className="linkTxt">
+            Need to create a account?{" "}
+            <Link to="register">
+              <span className="formLink">Click Here</span>
+            </Link>
+          </span>
+        </div>
       </div>
     </div>
   );

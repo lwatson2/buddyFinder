@@ -9,13 +9,13 @@
   width: 100%;
   height: 50px;
 }
-.navContainer button {
+.mainNavContainer button {
   border: none;
   background: transparent;
   color: hsl(214, 33%, 97%);
   padding: 8px;
 }
-.navContainer button:hover {
+.mainNavContainer button:hover {
   background-color: hsl(209, 20%, 25%);
   border-radius: 5px;
   -webkit-box-shadow: inset 0 2px 2px hsla(0, 0%, 0%, 0.1),
@@ -48,7 +48,7 @@
   -webkit-box-pack: flex-end;
   -ms-flex-pack: flex-end;
   justify-content: flex-end;
-  height: 116px;
+  height: 150px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -ms-flex-direction: column;
@@ -56,6 +56,32 @@
   -webkit-box-align: start;
   -ms-flex-align: start;
   align-items: flex-start;
+}
+.navBarOpenBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  margin-left: auto;
+  color: hsl(197, 92%, 61%);
+  margin-right: 10px;
+}
+.navBarCloseBtn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: hsl(197, 92%, 61%);
+  background: transparent;
+  padding: 10px;
+  margin-left: auto;
+  border: none;
+  margin-right: 10px;
+}
+.navBarLinkBtn {
+  padding-bottom: 10px;
+  cursor: pointer;
 }
 @media only screen and (min-width: 768px) {
   .navBarCloseBtn {

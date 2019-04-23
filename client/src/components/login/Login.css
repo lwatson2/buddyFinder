@@ -93,3 +93,18 @@
     0 1px 3px hsla(0, 0%, 0%, 0.2);
   box-shadow: inset 0 1px 0 hsl(196, 86%, 50%), 0 1px 3px hsla(0, 0%, 0%, 0.2);
 }
+.formLink {
+  margin-left: 10px;
+  color: hsl(201, 107%, 63%);
+}
+.registerLink {
+  padding-top: 23px;
+}
+.linkTxt {
+  color: hsl(210, 15%, 91%);
+}
+.formLink:hover {
+  border-bottom: 1px solid;
+  -webkit-transition: all 225ms;
+  transition: all 225ms;
+}
