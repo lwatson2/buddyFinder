@@ -29,7 +29,7 @@ function Header(props) {
         <Link to="/login">
           <button className="navBarLinkBtn">Login</button>
         </Link>
-        <Link to="/posts/newpost">
+        <Link to="/createnewpost">
           <button className="navBarLinkBtn">Create new post</button>
         </Link>
         <Link to={`/user/${username}`}>

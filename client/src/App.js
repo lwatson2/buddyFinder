@@ -7,6 +7,7 @@ import Homepage from "./components/homepage/Homepage";
 import Header from "./components/header/Header";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import NewPost from "./components/newpost/NewPost";
 
 library.add(faBars);
 
@@ -20,6 +21,7 @@ class App extends Component {
             <Route exact path="/" component={Homepage} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/createnewpost" component={NewPost} />
           </Switch>
         </div>
       </BrowserRouter>
