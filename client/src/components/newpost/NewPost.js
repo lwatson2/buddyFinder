@@ -23,16 +23,20 @@ function NewPost() {
               value={values.title || ""}
               placeholder="Please enter the title for your post"
               onChange={handleChange}
-              className="postTitleInput"
+              className="newPostInput"
               type="text"
               name="title"
               id="title"
             />
           </div>
           <div className="newPostGroupWrapper">
-            <label htmlFor="gameName">Your game name</label>
+            <label className="newPostLabel" htmlFor="gameName">
+              Your game name
+            </label>
             <input
               type="text"
+              placeholder="Please enter your game name"
+              className="newPostInput"
               name="gameName"
               id="gameName"
               onChange={handleChange}
@@ -40,7 +44,29 @@ function NewPost() {
             />
           </div>
           <div className="newPostGroupWrapper">
-            <label htmlFor="time">Select your start time</label>
+            <label className="newPostSelectLabel" htmlFor="groupLimit">
+              How many people do you need?
+            </label>
+            <select
+              className="groupLimitSelect"
+              id="groupLimit"
+              onChange={handleChange}
+              value={values.groupLimit}
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+            </select>
+          </div>
+          <div className="newPostTimeContainer">
+            <label className="newPostLabel" htmlFor="time">
+              Select your start time
+            </label>
             <input
               type="time"
               name="time"

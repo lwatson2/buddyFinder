@@ -5,8 +5,8 @@
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
   -ms-flex-direction: column;
   flex-direction: column;
   padding: 10px;
@@ -21,6 +21,10 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  width: 300px;
+  background: hsl(211, 12%, 43%);
+  height: 400px;
+  border-radius: 6px;
 }
 .newPostPageWrapper {
   height: 100vh;
@@ -36,4 +40,48 @@
 }
 .timeInput {
   width: 95px;
+  width: 95px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 6px;
+}
+.newPostLabel {
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+  padding-bottom: 10px;
+}
+.newPostInput {
+  width: 100%;
+  border: transparent;
+  border-radius: 6px;
+  height: 28px;
+  padding-left: 3px;
+  outline: none;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 225ms linear;
+  transition: all 225ms linear;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.newPostInput:focus {
+  border: 1px solid hsl(197, 84%, 55%);
+  -webkit-box-shadow: 0px 0px 0px 1px hsl(197, 84%, 55%);
+  box-shadow: 0px 0px 0px 1px hsl(197, 84%, 55%);
+}
+.groupLimitSelect {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid;
+  padding: 10px;
+}
+.newPostSelectLabel {
+  -ms-flex-item-align: start;
+  align-self: flex-start;
+}
+@media only screen and (min-width: 768px) {
+  .newPostFormContainer {
+    width: 400px;
+  }
 }
