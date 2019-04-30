@@ -4,8 +4,10 @@ import validate from "../helpers/NewPostValidationRules";
 import "./NewPost.css";
 
 function NewPost() {
-  const handleNewPostSubmit = () => {
+  const handleNewPostSubmit = e => {
+    e.preventDefault();
     console.log("tets");
+    console.log(values);
   };
   const { values, handleChange, handleSubmit, errors } = useForm(
     handleNewPostSubmit,
@@ -14,20 +16,25 @@ function NewPost() {
   return (
     <div className="newPostPageWrapper">
       <div className="newPostFormContainer">
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="newPostGroupWrapper">
             <label className="newPostLabel" htmlFor="title">
               Title
             </label>
             <input
-              value={values.title || ""}
-              placeholder="Please enter the title for your post"
-              onChange={handleChange}
               className="newPostInput"
+              value={values.title || ""}
+              onChange={handleChange}
+              placeholder="Please title your post"
               type="text"
-              name="title"
               id="title"
+              name="title"
             />
+            {errors.title && (
+              <div className="newPostErrorWrapper">
+                <span>{errors.title}</span>
+              </div>
+            )}
           </div>
           <div className="newPostGroupWrapper">
             <label className="newPostLabel" htmlFor="gameName">
@@ -42,6 +49,11 @@ function NewPost() {
               onChange={handleChange}
               value={values.gameName}
             />
+            {errors.gameName && (
+              <div className="newPostErrorWrapper">
+                <span>{errors.gameName}</span>
+              </div>
+            )}
           </div>
           <div className="newPostGroupWrapper">
             <label className="newPostSelectLabel" htmlFor="groupLimit">
@@ -50,8 +62,9 @@ function NewPost() {
             <select
               className="groupLimitSelect"
               id="groupLimit"
+              name="groupLimit"
               onChange={handleChange}
-              value={values.groupLimit}
+              value={values.groupLimit || ""}
             >
               <option value="1">1</option>
               <option value="2">2</option>
@@ -62,6 +75,11 @@ function NewPost() {
               <option value="7">7</option>
               <option value="8">8</option>
             </select>
+            {errors.groupLimit && (
+              <div className="newPostErrorWrapper">
+                <span>{errors.groupLimit}</span>
+              </div>
+            )}
           </div>
           <div className="newPostTimeContainer">
             <label className="newPostLabel" htmlFor="time">
@@ -75,6 +93,16 @@ function NewPost() {
               onChange={handleChange}
               value={values.time || ""}
             />
+            {errors.time && (
+              <div className="newPostErrorWrapper">
+                <span>{errors.time}</span>
+              </div>
+            )}
+          </div>
+          <div className="submitBtnWrapper">
+            <button type="submit" className="newPostSubmitBtn">
+              Submit
+            </button>
           </div>
         </form>
       </div>

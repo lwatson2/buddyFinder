@@ -34,7 +34,9 @@ const Register = props => {
               name="username"
             />
             {errors.username && (
-              <p className="registerErrorMessage">{errors.username}</p>
+              <div className="registerErrorMessage">
+                <span>{errors.username}</span>
+              </div>
             )}
           </div>
           <div className="form-group">
@@ -51,7 +53,9 @@ const Register = props => {
               name="password"
             />
             {errors.password && (
-              <p className="registerErrorMessage">{errors.password}</p>
+              <div className="registerErrorMessage">
+                <span>{errors.password}</span>
+              </div>
             )}
           </div>
           <div className="form-group">
@@ -68,7 +72,9 @@ const Register = props => {
               name="gamertag"
             />
             {errors.gamertag && (
-              <p className="registerErrorMessage">{errors.gamertag}</p>
+              <div className="registerErrorMessage">
+                <span>{errors.gamertag}</span>
+              </div>
             )}
           </div>
           <div className="formSelectGroup">

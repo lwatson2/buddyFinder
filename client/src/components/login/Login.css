@@ -1,5 +1,5 @@
 .loginWrapper {
-  height: 350px;
+  min-height: 350px;
   border-radius: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -107,4 +107,21 @@
   border-bottom: 1px solid;
   -webkit-transition: all 225ms;
   transition: all 225ms;
+}
+.loginErrorWrapper {
+  margin-top: 18px;
+  width: 100%;
+  background: hsla(0, 100%, 80%, 1);
+  height: 30px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: hsl(216, 20%, 25%);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
 }

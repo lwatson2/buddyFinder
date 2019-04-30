@@ -10,6 +10,7 @@
   -ms-flex-direction: column;
   flex-direction: column;
   padding: 10px;
+  width: 100%;
 }
 .newPostFormContainer {
   display: -webkit-box;
@@ -23,7 +24,8 @@
   align-items: center;
   width: 300px;
   background: hsl(211, 12%, 43%);
-  height: 400px;
+  height: auto;
+  min-height: 400px;
   border-radius: 6px;
 }
 .newPostPageWrapper {
@@ -38,17 +40,23 @@
   -ms-flex-align: center;
   align-items: center;
 }
+.newPostTimeContainer {
+  padding: 10px;
+}
 .timeInput {
   width: 95px;
   width: 95px;
   margin-left: 10px;
   border: none;
   border-radius: 6px;
+  padding-left: 5px;
+  cursor: pointer;
 }
 .newPostLabel {
   -ms-flex-item-align: start;
   align-self: flex-start;
   padding-bottom: 10px;
+  color: hsl(216, 33%, 99%);
 }
 .newPostInput {
   width: 100%;
@@ -73,12 +81,54 @@
   width: 100%;
   background: transparent;
   border: none;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid hsl(196, 94%, 67%);
   padding: 10px;
+  color: hsl(216, 33%, 99%);
+  cursor: pointer;
+}
+.groupLimitSelect option {
+  background-color: hsl(201, 20%, 25%);
 }
 .newPostSelectLabel {
   -ms-flex-item-align: start;
   align-self: flex-start;
+  color: hsl(216, 33%, 99%);
+}
+.newPostSubmitBtn {
+  border: 2px solid hsl(197, 50%, 57%);
+  width: 74px;
+  height: 37px;
+  background-color: transparent;
+  border-radius: 8px;
+  color: hsl(216, 33%, 99%);
+  cursor: pointer;
+  -webkit-transition: all 225ms ease-in-out;
+  transition: all 225ms ease-in-out;
+}
+.newPostSubmitBtn:hover {
+  border: none;
+  background-color: hsl(197, 50%, 57%);
+}
+.newPostErrorWrapper {
+  margin-top: 18px;
+  width: 100%;
+  background: hsla(0, 100%, 80%, 1);
+  height: 30px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: hsl(216, 20%, 25%);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+}
+.submitBtnWrapper {
+  margin-top: 15px;
+  margin-bottom: 10px;
 }
 @media only screen and (min-width: 768px) {
   .newPostFormContainer {

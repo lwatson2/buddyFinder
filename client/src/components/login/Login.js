@@ -27,7 +27,11 @@ const Login = props => {
         {sessionStorage.getItem("isAuth") && (
           <span className="successMsg">Success! You may now login.</span>
         )}
-        {loginErr && <span className="loginErrorMessage">{loginErr}</span>}
+        {loginErr && (
+          <div className="loginErrorWrapper">
+            <span>{loginErr}</span>
+          </div>
+        )}
         <form className="loginFormContainer" onSubmit={handleSubmit}>
           <div className="loginGroupWrapper">
             <label className="loginLabel" htmlFor="username">
@@ -44,7 +48,9 @@ const Login = props => {
               name="username"
             />
             {errors.username && (
-              <p className="loginErrorMessage">{errors.username}</p>
+              <div className="loginErrorWrapper">
+                <span>{errors.username}</span>
+              </div>
             )}
           </div>
           <div className="loginGroupWrapper">
@@ -62,7 +68,9 @@ const Login = props => {
               name="password"
             />
             {errors.password && (
-              <p className="loginErrorMessage">{errors.password}</p>
+              <div className="loginErrorWrapper">
+                <span>{errors.password}</span>
+              </div>
             )}
           </div>
           <button className="loginSubmitBtn" type="submit">
