@@ -10,7 +10,6 @@
   -ms-flex-direction: column;
   flex-direction: column;
   padding: 10px;
-  width: 100%;
 }
 .newPostFormContainer {
   display: -webkit-box;
@@ -22,6 +21,10 @@
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
   width: 300px;
   background: hsl(211, 12%, 43%);
   height: auto;
@@ -96,8 +99,8 @@
 }
 .newPostSubmitBtn {
   border: 2px solid hsl(197, 50%, 57%);
-  width: 74px;
-  height: 37px;
+  width: 115px;
+  height: 40px;
   background-color: transparent;
   border-radius: 8px;
   color: hsl(216, 33%, 99%);
@@ -130,8 +133,28 @@
   margin-top: 15px;
   margin-bottom: 10px;
 }
+.newPostCreateErrorWrapper {
+  margin-top: 18px;
+  width: 272px;
+  background: hsla(0, 100%, 80%, 1);
+  height: 30px;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  color: hsl(216, 20%, 25%);
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-radius: 4px;
+}
 @media only screen and (min-width: 768px) {
   .newPostFormContainer {
     width: 400px;
+  }
+  .newPostGroupWrapper {
+    width: 100%;
   }
 }

@@ -13,9 +13,11 @@ const Login = props => {
     if (res.data.err) {
       setLoginErr(res.data.err.message);
     }
-    sessionStorage.setItem("token", res.data.token);
-    sessionStorage.setItem("username", res.data.username);
-    props.history.push("/");
+    if (!res.data.token) {
+      sessionStorage.setItem("token", res.data.token);
+      sessionStorage.setItem("username", res.data.username);
+      props.history.push("/");
+    }
   };
   const { values, handleChange, handleSubmit, errors } = useForm(
     handleLogin,

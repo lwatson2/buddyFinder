@@ -5,9 +5,10 @@ const PostSchema = new mongoose.Schema({
   title: { type: String, trim: true },
   time: { type: String, trim: true },
   groupLimit: Number,
-  currentGroupMembers: Number,
+  currentGroupMembers: { type: [String] },
   gameName: { type: String, trim: true },
   gamertag: String,
+  system: String,
   createdAt: { type: Date, default: Date.now() }
 });
 

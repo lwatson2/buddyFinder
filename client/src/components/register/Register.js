@@ -7,8 +7,10 @@ import { withRouter } from "react-router";
 
 const Register = props => {
   const handleRegister = async () => {
-    /*  const res = await axios.post("/users/register", values);
-    console.log(res.data); */
+    const res = await axios.post("/users/register", values);
+    if (res.data.err) {
+      //Do something blah
+    }
     sessionStorage.setItem("isAuth", true);
     props.history.push("/login");
   };

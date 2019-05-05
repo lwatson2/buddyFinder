@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import useForm from "../helpers/FormHelper";
 import validate from "../helpers/NewPostValidationRules";
 import "./NewPost.css";
+import axios from "axios";
 
-function NewPost() {
-  const handleNewPostSubmit = e => {
-    e.preventDefault();
-    console.log("tets");
-    console.log(values);
+const NewPost = props => {
+  const [newPostError, setNewPostError] = useState(false);
+  const handleNewPostSubmit = async () => {
+    const { time, groupLimit, title, gameName } = values;
+    const username = sessionStorage.getItem("username");
+    const data = {
+      time,
+      groupLimit,
+      title,
+      gameName,
+      username,
+      currentGroupMembers: username
+    };
+    const res = await axios.post("/posts/newpost", data);
+    if (res.data.err) {
+      setNewPostError(true);
+    }
+    if (res.data.postCreated) {
+      props.history.push("/");
+    }
   };
   const { values, handleChange, handleSubmit, errors } = useForm(
     handleNewPostSubmit,
@@ -16,6 +32,11 @@ function NewPost() {
   return (
     <div className="newPostPageWrapper">
       <div className="newPostFormContainer">
+        {newPostError && (
+          <div className="newPostCreateErrorWrapper">
+            <span>Oops! Something went wrong.</span>
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="newPostGroupWrapper">
             <label className="newPostLabel" htmlFor="title">
@@ -47,7 +68,7 @@ function NewPost() {
               name="gameName"
               id="gameName"
               onChange={handleChange}
-              value={values.gameName}
+              value={values.gameName || ""}
             />
             {errors.gameName && (
               <div className="newPostErrorWrapper">
@@ -63,9 +84,11 @@ function NewPost() {
               className="groupLimitSelect"
               id="groupLimit"
               name="groupLimit"
+              placeholder="Group limit"
               onChange={handleChange}
               value={values.groupLimit || ""}
             >
+              <option defaultValue hidden />
               <option value="1">1</option>
               <option value="2">2</option>
               <option value="3">3</option>
@@ -108,6 +131,6 @@ function NewPost() {
       </div>
     </div>
   );
-}
+};
 
 export default NewPost;
