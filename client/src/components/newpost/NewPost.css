@@ -12,6 +12,8 @@
   padding: 10px;
 }
 .newPostFormContainer {
+  -webkit-box-shadow: 0 15px 35px hsla(0, 0%, 0%, 0.2);
+  box-shadow: 0 15px 35px hsla(0, 0%, 0%, 0.2);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

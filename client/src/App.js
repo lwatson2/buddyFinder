@@ -6,10 +6,16 @@ import Login from "./components/login/Login";
 import Homepage from "./components/homepage/Homepage";
 import Header from "./components/header/Header";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faGamepad,
+  faClock,
+  faUserAlt,
+  faUsers
+} from "@fortawesome/free-solid-svg-icons";
 import NewPost from "./components/newpost/NewPost";
 
-library.add(faBars);
+library.add(faBars, faGamepad, faClock, faUserAlt, faUsers);
 
 class App extends Component {
   render() {

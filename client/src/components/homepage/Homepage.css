@@ -1,0 +1,69 @@
+.homepageContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+.postContainer {
+  background: aquamarine;
+  background: hsl(203, 87%, 34%);
+  width: 85%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border-radius: 10px;
+  color: hsl(216, 33%, 97%);
+}
+.postListItem {
+  padding: 10px;
+}
+.postList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  padding: 15px;
+}
+.currentMembersContainer {
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: wrap;
+  flex-flow: wrap;
+}
+.memberNameContainer {
+  padding-bottom: 10px;
+}
+.joinButton {
+  border: none;
+  width: 100%;
+  height: 30px;
+  background: hsl(196, 77%, 56%);
+  font-size: 20px;
+  border-radius: 0px 0px 10px 10px;
+}
+.memberName {
+  padding-right: 1em;
+}
+.memberGamertag {
+  background: hsl(200, 72%, 55%);
+  color: hsl(209, 20%, 16%);
+  padding: 3px;
+  border-radius: 6px;
+}
