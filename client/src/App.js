@@ -10,12 +10,12 @@ import {
   faBars,
   faGamepad,
   faClock,
-  faUserAlt,
-  faUsers
+  faUsers,
+  faCheck
 } from "@fortawesome/free-solid-svg-icons";
 import NewPost from "./components/newpost/NewPost";
 
-library.add(faBars, faGamepad, faClock, faUserAlt, faUsers);
+library.add(faBars, faGamepad, faClock, faUsers, faCheck);
 
 class App extends Component {
   render() {

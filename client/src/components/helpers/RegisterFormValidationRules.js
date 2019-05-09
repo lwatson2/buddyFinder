@@ -18,6 +18,9 @@ const validate = values => {
   if (values.password && values.password.length > 50) {
     errors.password = "Password cannot be greater than 50 characters.";
   }
+  if (!values.system) {
+    errors.system = "System is required";
+  }
   return errors;
 };
 

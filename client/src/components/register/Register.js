@@ -92,10 +92,11 @@ const Register = props => {
               id="system"
               name="system"
             >
-              <option value="playstation 4">Playstation 4</option>
-              <option value="xbox One">Xbox One</option>
-              <option value="pc">PC</option>
-              <option value="switch">Switch</option>
+              <option default value hidden />
+              <option value="Playstation">Playstation 4</option>
+              <option value="Xbox">Xbox One</option>
+              <option value="Steam">Steam</option>
+              <option value="Switch">Switch</option>
             </select>
           </div>
 

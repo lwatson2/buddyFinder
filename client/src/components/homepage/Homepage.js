@@ -9,6 +9,7 @@ import axios from "axios";
 
 const Homepage = props => {
   const [data, setData] = useState({ posts: [] });
+  const [joined, setJoined] = useState({ joinedGroup: false, groupId: [] });
   let system = "Playstation";
 
   useEffect(() => {
@@ -19,7 +20,21 @@ const Homepage = props => {
     };
     getData();
   }, []);
-
+  const handleGroupJoin = async (postId, currentGroupMembers) => {
+    const joinedPosts = joined.groupId;
+    joinedPosts.push(postId);
+    setJoined({ joinedGroup: true, groupId: joinedPosts });
+    const user = sessionStorage.getItem("user");
+    const parsedUser = JSON.parse(user);
+    const posts = data.posts;
+    posts.map(post => {
+      if (post._id === postId) {
+        post.currentGroupMembers.push(parsedUser);
+      }
+    });
+    setData({ posts: posts });
+    const res = await axios.post("/posts/joinPost", { user, postId });
+  };
   const changeSystem = system => {
     switch (system) {
       default:
@@ -53,23 +68,23 @@ const Homepage = props => {
   return (
     <main className="homepageContainer">
       {data.posts.map((post, index) => (
-        <div key={index} className="postBoxContainer">
+        <div key={post._id} className="postBoxContainer">
           <div className="postListsContainer">
             <ul className="postDetailList">
-              <li className="postListItem" key={index}>
+              <li className="postListItem" key={post.title}>
                 {post.title}
               </li>
-              <li className="postListItem" key={index}>
+              <li className="postListItem" key={post.system}>
                 {" "}
                 <FontAwesomeIcon icon="gamepad" /> {post.system}{" "}
               </li>
-              <li className="postListItem" key={index}>
+              <li className="postListItem" key={post.gameName}>
                 <FontAwesomeIcon icon="gamepad" /> {post.gameName}
               </li>
-              <li className="postListItem" key={index}>
+              <li className="postListItem" key={post.time}>
                 <FontAwesomeIcon icon="clock" /> {post.time}
               </li>
-              <li className="postListItem" key={index}>
+              <li className="postListItem" key={post.groupLimit}>
                 <FontAwesomeIcon icon="users" />{" "}
                 {post.currentGroupMembers.length} / {post.groupLimit} members
               </li>
@@ -77,22 +92,34 @@ const Homepage = props => {
 
             <div className="currentMembersContainer">
               {post.currentGroupMembers.map(member => (
-                <div className="memberNameContainer">
-                  <span key={member.gamertag} className="memberName">
-                    {member.username}
-                  </span>
-                  <span
-                    key={member.username}
-                    className={changeStyle(member.system)}
-                  >
+                <div key={member.username} className="memberNameContainer">
+                  <span className="memberName">{member.username}</span>
+                  <span className={changeStyle(member.system)}>
                     {changeSystem(member.system)} id: {member.gamertag}
                   </span>
                 </div>
               ))}
             </div>
           </div>
-
-          <button className="joinButton">Join</button>
+          {joined.joinedGroup && joined.groupId.includes(post._id) ? (
+            <button className="joinButton">
+              Joined
+              <FontAwesomeIcon
+                icon="check"
+                size="sm"
+                style={{ marginLeft: "5px" }}
+              />
+            </button>
+          ) : (
+            <button
+              className="joinButton"
+              onClick={() =>
+                handleGroupJoin(post._id, post.currentGroupMembers)
+              }
+            >
+              Join
+            </button>
+          )}
         </div>
       ))}
     </main>

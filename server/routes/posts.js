@@ -43,5 +43,25 @@ router.get("/getPosts", async (req, res) => {
     posts: posts
   });
 });
+router.post("/joinPost", async (req, res) => {
+  const { username, system, gamertag } = req.body.user;
+  const { postId } = req.body;
+  const data = [username, system, gamertag];
+  const update = {
+    $push: { currentGroupMembers: [{ data }] }
+  };
+  Post.findOneAndUpdate(
+    postId,
+    {
+      $push: { currentGroupMembers: [{ username, system, gamertag }] }
+    },
+    (err, doc) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(doc);
+    }
+  );
+});
 
 module.exports = router;

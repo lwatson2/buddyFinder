@@ -98,7 +98,11 @@ router.post("/login", (req, res, next) => {
       jwt.sign({ user }, "mysecretkey", { expiresIn: "1d" }, (err, token) => {
         res.json({
           token,
-          username: user.username
+          user: {
+            username: user.username,
+            gamertag: user.gamertag,
+            system: user.system
+          }
         });
       });
     } else {

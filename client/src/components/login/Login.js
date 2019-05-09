@@ -15,7 +15,7 @@ const Login = props => {
     }
     if (res.data.token) {
       sessionStorage.setItem("token", res.data.token);
-      sessionStorage.setItem("username", res.data.username);
+      sessionStorage.setItem("user", JSON.stringify(res.data.user));
       props.history.push("/");
     }
   };

@@ -125,7 +125,14 @@
     flex-direction: column;
   }
   .memberNameContainer {
-    padding: 10px;
+    padding-bottom: 15px;
+    padding-right: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   .joinButton {
     -webkit-box-pack: center;
