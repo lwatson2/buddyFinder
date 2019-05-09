@@ -9,23 +9,59 @@ import axios from "axios";
 
 const Homepage = props => {
   const [data, setData] = useState({ posts: [] });
-  const [joined, setJoined] = useState({ joinedGroup: false, groupId: [] });
-  let system = "Playstation";
+  const [joined, setJoined] = useState({
+    joinedGroup: false,
+    groupId: [],
+    groupMembers: [{}]
+  });
+  const user = sessionStorage.getItem("user");
+
+  const parsedUser = JSON.parse(user);
 
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get("/posts/getposts");
       console.log(res);
       setData({ posts: res.data.posts });
+      if (user) {
+        const joinedPosts = joined.groupId;
+        const groupMembers = joined.groupMembers;
+        res.data.posts.map(post => {
+          post.currentGroupMembers.map(member => {
+            console.log(parsedUser.gamertag);
+            console.log(member.gamertag);
+            if (parsedUser.gamertag === member.gamertag) {
+              joinedPosts.push(member._id);
+              groupMembers.push(member.gamertag, post._id);
+
+              setJoined({
+                joinedGroup: true,
+                groupId: joinedPosts,
+                groupMembers: groupMembers
+              });
+              console.log("true");
+            } else {
+              console.log(false);
+            }
+          });
+        });
+      }
+      console.log(joined);
     };
     getData();
   }, []);
   const handleGroupJoin = async (postId, currentGroupMembers) => {
     const joinedPosts = joined.groupId;
-    joinedPosts.push(postId);
-    setJoined({ joinedGroup: true, groupId: joinedPosts });
+    const currentMembers = joined.groupMembers;
     const user = sessionStorage.getItem("user");
     const parsedUser = JSON.parse(user);
+    joinedPosts.push(postId);
+    currentMembers.push(parsedUser.gamertag);
+    setJoined({
+      joinedGroup: true,
+      groupId: joinedPosts,
+      groupMembers: currentMembers
+    });
     const posts = data.posts;
     posts.map(post => {
       if (post._id === postId) {
@@ -33,7 +69,40 @@ const Homepage = props => {
       }
     });
     setData({ posts: posts });
-    const res = await axios.post("/posts/joinPost", { user, postId });
+    await axios.post("/posts/joinPost", { parsedUser, postId });
+  };
+  const checkIfJoined = post => {
+    if (post.currentGroupMembers.length >= post.groupLimit) {
+      return (
+        <button className="joinButton" disabled={true}>
+          Full
+        </button>
+      );
+    } else if (
+      joined.groupMembers.includes(post._id) &&
+      joined.groupMembers.includes(parsedUser.gamertag)
+    ) {
+      console.log(true);
+      return (
+        <button className="joinButton">
+          Joined
+          <FontAwesomeIcon
+            icon="check"
+            size="sm"
+            style={{ marginLeft: "5px" }}
+          />
+        </button>
+      );
+    } else {
+      return (
+        <button
+          className="joinButton"
+          onClick={() => handleGroupJoin(post._id, post.currentGroupMembers)}
+        >
+          Join
+        </button>
+      );
+    }
   };
   const changeSystem = system => {
     switch (system) {
@@ -63,8 +132,7 @@ const Homepage = props => {
         return "switchGamertag";
     }
   };
-  console.log(system);
-  console.log(data);
+  console.log(joined);
   return (
     <main className="homepageContainer">
       {data.posts.map((post, index) => (
@@ -101,25 +169,7 @@ const Homepage = props => {
               ))}
             </div>
           </div>
-          {joined.joinedGroup && joined.groupId.includes(post._id) ? (
-            <button className="joinButton">
-              Joined
-              <FontAwesomeIcon
-                icon="check"
-                size="sm"
-                style={{ marginLeft: "5px" }}
-              />
-            </button>
-          ) : (
-            <button
-              className="joinButton"
-              onClick={() =>
-                handleGroupJoin(post._id, post.currentGroupMembers)
-              }
-            >
-              Join
-            </button>
-          )}
+          {checkIfJoined(post)}
         </div>
       ))}
     </main>
