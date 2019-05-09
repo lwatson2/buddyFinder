@@ -18,6 +18,7 @@ const NewPost = props => {
       currentGroupMembers: username
     };
     const res = await axios.post("/posts/newpost", data);
+    console.log(res.data);
     if (res.data.err) {
       setNewPostError(true);
     }

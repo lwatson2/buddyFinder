@@ -22,22 +22,25 @@ router.post("/newpost", async (req, res) => {
     groupLimit,
     gameName,
     title,
-    currentGroupMembers: [username, rando],
+    currentGroupMembers: [{ username, system, gamertag }],
     gamertag,
     system
   });
-  /*  await newPost.save((err, post) => {
+  await newPost.save((err, post) => {
     if (err) {
-      return res, json({ err: true });
+      return res.json({ err: true });
     }
+    console.log(err);
     return res.json({
       postCreated: true
     });
-  }); */
+  });
+});
 
-  console.log(user);
+router.get("/getPosts", async (req, res) => {
+  const posts = await Post.find({});
   res.json({
-    err: true
+    posts: posts
   });
 });
 

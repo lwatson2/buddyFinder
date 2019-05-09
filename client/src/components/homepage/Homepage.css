@@ -5,12 +5,20 @@
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 .postBoxContainer {
   background: aquamarine;
   background: hsl(203, 87%, 34%);
   width: 300px;
   border-radius: 10px;
+  margin-bottom: 50px;
   color: hsl(216, 33%, 97%);
 }
 .postListsContainer {
@@ -51,7 +59,7 @@
   flex-flow: wrap;
 }
 .memberNameContainer {
-  padding-bottom: 10px;
+  padding-bottom: 15px;
   padding-right: 10px;
 }
 .joinButton {
@@ -88,7 +96,13 @@
   border-radius: 6px;
   background: #1b2838;
 }
-@media only screen and (min-width: 600px) {
+.switchGamertag {
+  background: hsl(348, 100%, 54%);
+  padding: 3px;
+  border-radius: 6px;
+  color: hsl(209, 12%, 0%);
+}
+@media only screen and (min-width: 650px) {
   .postListsContainer {
     -webkit-box-orient: horizontal;
     -webkit-box-direction: normal;
@@ -99,7 +113,7 @@
     justify-content: space-evenly;
   }
   .postBoxContainer {
-    width: 520px;
+    width: 575px;
   }
   .postDetailList {
     width: 200px;
@@ -122,7 +136,18 @@
     display: flex;
     width: 200px;
     margin-left: auto;
-    border-radius: 10px 0px 0px 0px;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    border-radius: 0px 0px 10px;
+  }
+  .joinButton:hover {
+    border-radius: 10px 0px 10px 0px;
+    background: hsl(196, 94%, 67%);
+  }
+}
+@media only screen and (min-width: 800px) {
+  .postBoxContainer {
+    width: 650px;
   }
 }
 @media only screen and (min-width: 1000px) {

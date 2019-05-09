@@ -130,6 +130,8 @@
   -ms-flex-align: center;
   align-items: center;
   border-radius: 4px;
+  padding: 2px;
+  font-size: 12px;
 }
 .submitBtnWrapper {
   margin-top: 15px;
@@ -152,7 +154,7 @@
   align-items: center;
   border-radius: 4px;
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 600px) {
   .newPostFormContainer {
     width: 400px;
   }

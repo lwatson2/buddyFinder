@@ -24,16 +24,24 @@ function Header(props) {
         className={showNav ? " mainNavContainer active" : "mainNavContainer"}
       >
         <Link to="/">
-          <button className="navBarLinkBtn">Home</button>
+          <button onClick={() => setshowNav(false)} className="navBarLinkBtn">
+            Home
+          </button>
         </Link>
         <Link to="/login">
-          <button className="navBarLinkBtn">Login</button>
+          <button onClick={() => setshowNav(false)} className="navBarLinkBtn">
+            Login
+          </button>
         </Link>
         <Link to="/createnewpost">
-          <button className="navBarLinkBtn">Create new post</button>
+          <button onClick={() => setshowNav(false)} className="navBarLinkBtn">
+            Create new post
+          </button>
         </Link>
         <Link to={`/user/${username}`}>
-          <button className="navBarLinkBtn">My profile</button>
+          <button onClick={() => setshowNav(false)} className="navBarLinkBtn">
+            My profile
+          </button>
         </Link>
       </div>
     </nav>

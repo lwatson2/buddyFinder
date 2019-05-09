@@ -9,11 +9,11 @@ const Login = props => {
   const [loginErr, setLoginErr] = useState("");
   const handleLogin = async () => {
     const res = await axios.post("/users/login", values);
-
+    console.log(res.data);
     if (res.data.err) {
       setLoginErr(res.data.err.message);
     }
-    if (!res.data.token) {
+    if (res.data.token) {
       sessionStorage.setItem("token", res.data.token);
       sessionStorage.setItem("username", res.data.username);
       props.history.push("/");

@@ -1,13 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Homepage.css";
+import axios from "axios";
 
 //xbox color hsl(120, 100%, 47%)
 // Steam color #1b2838
-//Switch color
+//Switch color hsl(348, 100%, 50%)
 
 const Homepage = props => {
-  let system = "Steam";
+  const [data, setData] = useState({ posts: [] });
+  let system = "Playstation";
+
+  useEffect(() => {
+    const getData = async () => {
+      const res = await axios.get("/posts/getposts");
+      console.log(res);
+      setData({ posts: res.data.posts });
+    };
+    getData();
+  }, []);
 
   const changeSystem = system => {
     switch (system) {
@@ -38,59 +49,52 @@ const Homepage = props => {
     }
   };
   console.log(system);
+  console.log(data);
   return (
     <main className="homepageContainer">
-      <div className="postBoxContainer">
-        <div className="postListsContainer">
-          <ul className="postDetailList">
-            <li className="postListItem">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Magnam
-              saepe
-            </li>
-            <li className="postListItem">
-              {" "}
-              <FontAwesomeIcon icon="gamepad" /> Playstation{" "}
-            </li>
-            <li className="postListItem">
-              <FontAwesomeIcon icon="gamepad" /> Destiny
-            </li>
-            <li className="postListItem">
-              <FontAwesomeIcon icon="clock" /> 8:45 am
-            </li>
-            <li className="postListItem">
-              <FontAwesomeIcon icon="users" /> 1 / 3 members
-            </li>
-          </ul>
+      {data.posts.map((post, index) => (
+        <div key={index} className="postBoxContainer">
+          <div className="postListsContainer">
+            <ul className="postDetailList">
+              <li className="postListItem" key={index}>
+                {post.title}
+              </li>
+              <li className="postListItem" key={index}>
+                {" "}
+                <FontAwesomeIcon icon="gamepad" /> {post.system}{" "}
+              </li>
+              <li className="postListItem" key={index}>
+                <FontAwesomeIcon icon="gamepad" /> {post.gameName}
+              </li>
+              <li className="postListItem" key={index}>
+                <FontAwesomeIcon icon="clock" /> {post.time}
+              </li>
+              <li className="postListItem" key={index}>
+                <FontAwesomeIcon icon="users" />{" "}
+                {post.currentGroupMembers.length} / {post.groupLimit} members
+              </li>
+            </ul>
 
-          <div className="currentMembersContainer">
-            <div className="memberNameContainer">
-              <span className="memberName">Straight</span>
-              <span className={changeStyle(system)}>
-                {changeSystem(system)} id: Straightkillinya
-              </span>
-            </div>
-            <div className="memberNameContainer">
-              <span className="memberName">Straight</span>
-              <span className={changeStyle(system)}>
-                {changeSystem(system)} id: Straightkillinya
-              </span>
-            </div>
-            <div className="memberNameContainer">
-              <span className="memberName">Straight</span>
-              <span className={changeStyle(system)}>
-                {changeSystem(system)} id: Straightkillinya
-              </span>
-            </div>
-            <div className="memberNameContainer">
-              <span className="memberName">Straight</span>
-              <span className={changeStyle(system)}>
-                {changeSystem(system)} id: Straightkillinya
-              </span>
+            <div className="currentMembersContainer">
+              {post.currentGroupMembers.map(member => (
+                <div className="memberNameContainer">
+                  <span key={member.gamertag} className="memberName">
+                    {member.username}
+                  </span>
+                  <span
+                    key={member.username}
+                    className={changeStyle(member.system)}
+                  >
+                    {changeSystem(member.system)} id: {member.gamertag}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
+
+          <button className="joinButton">Join</button>
         </div>
-        <button className="joinButton">Join</button>
-      </div>
+      ))}
     </main>
   );
 };
