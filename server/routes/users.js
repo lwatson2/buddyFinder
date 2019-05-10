@@ -116,9 +116,7 @@ router.post("/login", (req, res, next) => {
 
 router.get("/logout", (req, res) => {
   req.logOut();
-  res.json({
-    isLoggedOut: true
-  });
+  res.sendStatus(200);
 });
 
 // Route to get user info for post details

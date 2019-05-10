@@ -2,11 +2,20 @@ import React, { useState } from "react";
 import "./Header.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { withRouter } from "react-router";
 
-function Header(props) {
+const Header = props => {
   const [showNav, setshowNav] = useState(false);
-  const username = sessionStorage.getItem("username");
-  console.log(username);
+  const user = sessionStorage.getItem("user");
+  const token = sessionStorage.getItem("token");
+  const parsedUser = JSON.parse(user);
+  const handleLogout = async () => {
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("token");
+    await axios.get("/users/logout");
+    props.history.push("/");
+  };
   return (
     <nav
       className={showNav ? "navContainer" : "navContainer navContaierClosed"}
@@ -28,24 +37,40 @@ function Header(props) {
             Home
           </button>
         </Link>
-        <Link to="/login">
-          <button onClick={() => setshowNav(false)} className="navBarLinkBtn">
-            Login
+        {token ? (
+          <button onClick={handleLogout} className="NavBarLinkBtn">
+            Logout
           </button>
-        </Link>
-        <Link to="/createnewpost">
-          <button onClick={() => setshowNav(false)} className="navBarLinkBtn">
-            Create new post
-          </button>
-        </Link>
-        <Link to={`/user/${username}`}>
-          <button onClick={() => setshowNav(false)} className="navBarLinkBtn">
-            My profile
-          </button>
-        </Link>
+        ) : (
+          <Link to="/login">
+            <button onClick={() => setshowNav(false)} className="navBarLinkBtn">
+              Login
+            </button>
+          </Link>
+        )}
+        {token && (
+          <>
+            <Link to="/createnewpost">
+              <button
+                onClick={() => setshowNav(false)}
+                className="navBarLinkBtn"
+              >
+                Create new post
+              </button>
+            </Link>
+            <Link to={`/user/${parsedUser.user}`}>
+              <button
+                onClick={() => setshowNav(false)}
+                className="navBarLinkBtn"
+              >
+                My profile
+              </button>
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
-}
+};
 
-export default Header;
+export default withRouter(Header);

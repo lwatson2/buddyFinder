@@ -12,8 +12,14 @@ const Homepage = props => {
   const [joined, setJoined] = useState({
     joinedGroup: false,
     groupId: [],
-    groupMembers: [{}]
+    groupMembers: []
   });
+  const [error, setError] = useState({
+    isError: false,
+    errorMsg: "",
+    groupId: ""
+  });
+
   const user = sessionStorage.getItem("user");
 
   const parsedUser = JSON.parse(user);
@@ -21,57 +27,72 @@ const Homepage = props => {
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get("/posts/getposts");
-      console.log(res);
       setData({ posts: res.data.posts });
+      //If user is logged in check to see if they are apart of current group members array
       if (user) {
         const joinedPosts = joined.groupId;
         const groupMembers = joined.groupMembers;
         res.data.posts.map(post => {
-          post.currentGroupMembers.map(member => {
-            console.log(parsedUser.gamertag);
-            console.log(member.gamertag);
+          return post.currentGroupMembers.map(member => {
+            // If the parsed users gamertag(i.e. their creds)  is the same as a one in the current group members add the post id and thier gamertag to the group members state
             if (parsedUser.gamertag === member.gamertag) {
-              joinedPosts.push(member._id);
-              groupMembers.push(member.gamertag, post._id);
+              joinedPosts.push(post._id);
+              groupMembers.push(member.gamertag);
 
-              setJoined({
+              return setJoined({
                 joinedGroup: true,
                 groupId: joinedPosts,
                 groupMembers: groupMembers
               });
-              console.log("true");
             } else {
-              console.log(false);
             }
           });
         });
       }
-      console.log(joined);
     };
     getData();
   }, []);
-  const handleGroupJoin = async (postId, currentGroupMembers) => {
+  const handleGroupJoin = async (postId, system, post) => {
     const joinedPosts = joined.groupId;
     const currentMembers = joined.groupMembers;
-    const user = sessionStorage.getItem("user");
-    const parsedUser = JSON.parse(user);
+    // Check if user is logged in before joining
+    if (!parsedUser) {
+      return setError({
+        isError: true,
+        errorMsg: "Please log in to join groups.",
+        groupId: postId
+      });
+    }
+    //Make sure user is only joining groups for thier platform
+    if (parsedUser.system !== system) {
+      return setError({
+        isError: true,
+        errorMsg: "Please only join groups on your platform.",
+        groupId: postId
+      });
+    }
+    // Add their post id and gamertag to state to show they've joined the group and to show which button
     joinedPosts.push(postId);
     currentMembers.push(parsedUser.gamertag);
+    currentMembers.push(postId);
     setJoined({
       joinedGroup: true,
       groupId: joinedPosts,
       groupMembers: currentMembers
     });
+    //Add their creds to the currentGroupMmebers state to be shown on the post list
     const posts = data.posts;
     posts.map(post => {
       if (post._id === postId) {
-        post.currentGroupMembers.push(parsedUser);
+        return post.currentGroupMembers.push(parsedUser);
       }
     });
     setData({ posts: posts });
+    checkIfJoined(post, currentMembers);
+    // Send their data back to the sever to be saved to the database
     await axios.post("/posts/joinPost", { parsedUser, postId });
   };
-  const checkIfJoined = post => {
+  const checkIfJoined = (post, currentMembers) => {
     if (post.currentGroupMembers.length >= post.groupLimit) {
       return (
         <button className="joinButton" disabled={true}>
@@ -79,10 +100,14 @@ const Homepage = props => {
         </button>
       );
     } else if (
-      joined.groupMembers.includes(post._id) &&
-      joined.groupMembers.includes(parsedUser.gamertag)
+      // Check if group members state contains the post id and if the group members state contains the users gamertag to show they've already joined
+      (parsedUser &&
+        joined.groupId.includes(post._id) &&
+        joined.groupMembers.includes(parsedUser.gamertag)) ||
+      (currentMembers &&
+        currentMembers.includes(post._id) &&
+        currentMembers.includes(parsedUser.gamertag))
     ) {
-      console.log(true);
       return (
         <button className="joinButton">
           Joined
@@ -97,7 +122,7 @@ const Homepage = props => {
       return (
         <button
           className="joinButton"
-          onClick={() => handleGroupJoin(post._id, post.currentGroupMembers)}
+          onClick={() => handleGroupJoin(post._id, post.system, post)}
         >
           Join
         </button>
@@ -132,11 +157,15 @@ const Homepage = props => {
         return "switchGamertag";
     }
   };
-  console.log(joined);
   return (
     <main className="homepageContainer">
       {data.posts.map((post, index) => (
         <div key={post._id} className="postBoxContainer">
+          {error.isError && error.groupId === post._id && (
+            <div className="postErrorMessageContainer">
+              <span className="postErrorMessage">{error.errorMsg}</span>
+            </div>
+          )}
           <div className="postListsContainer">
             <ul className="postDetailList">
               <li className="postListItem" key={post.title}>

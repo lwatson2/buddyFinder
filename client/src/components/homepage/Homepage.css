@@ -18,6 +18,7 @@
   background: hsl(203, 87%, 34%);
   width: 300px;
   border-radius: 10px;
+  position: relative;
   margin-bottom: 50px;
   color: hsl(216, 33%, 97%);
 }
@@ -102,6 +103,27 @@
   border-radius: 6px;
   color: hsl(209, 12%, 0%);
 }
+.postErrorMessageContainer {
+  position: absolute;
+  color: hsl(216, 20%, 25%);
+  background: hsla(0, 100%, 80%, 1);
+  bottom: -39px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 300px;
+  height: 30px;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  left: 50%;
+  border-radius: 6px;
+}
 @media only screen and (min-width: 650px) {
   .postListsContainer {
     -webkit-box-orient: horizontal;
@@ -131,8 +153,8 @@
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
   }
   .joinButton {
     -webkit-box-pack: center;
@@ -151,14 +173,23 @@
     border-radius: 10px 0px 10px 0px;
     background: hsl(196, 94%, 67%);
   }
+  .postErrorMessageContainer {
+    width: 367px;
+  }
 }
 @media only screen and (min-width: 800px) {
   .postBoxContainer {
     width: 650px;
   }
+  .postErrorMessageContainer {
+    width: 367px;
+  }
 }
 @media only screen and (min-width: 1000px) {
   .postBoxContainer {
     width: 720px;
+  }
+  .postErrorMessageContainer {
+    width: 367px;
   }
 }
