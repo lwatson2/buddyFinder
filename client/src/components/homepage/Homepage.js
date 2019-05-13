@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./Homepage.css";
 import axios from "axios";
+import { PostContext } from "./../context/PostContext";
 
 //xbox color hsl(120, 100%, 47%)
 // Steam color #1b2838
@@ -19,6 +20,7 @@ const Homepage = props => {
     errorMsg: "",
     groupId: ""
   });
+  const [fullGroup, setFullGroup] = useContext(PostContext);
 
   const user = sessionStorage.getItem("user");
 
@@ -33,11 +35,17 @@ const Homepage = props => {
         const joinedPosts = joined.groupId;
         const groupMembers = joined.groupMembers;
         res.data.posts.map(post => {
-          return post.currentGroupMembers.map(member => {
+          if (post.currentGroupMembers.length >= post.groupLimit) {
+            setFullGroup(prevState => [
+              ...prevState,
+              { title: post.title, currentMembers: post.currentGroupMembers }
+            ]);
+          }
+          post.currentGroupMembers.map(member => {
             // If the parsed users gamertag(i.e. their creds)  is the same as a one in the current group members add the post id and thier gamertag to the group members state
-            if (parsedUser.gamertag === member.gamertag) {
+            if (parsedUser.username === member.username) {
               joinedPosts.push(post._id);
-              groupMembers.push(member.gamertag);
+              groupMembers.push(member.username);
 
               return setJoined({
                 joinedGroup: true,
@@ -52,6 +60,23 @@ const Homepage = props => {
     };
     getData();
   }, []);
+  useEffect(() => {
+    const setNewNotifcation = () => {
+      data.posts.map(post => {
+        post.currentGroupMembers.map(member => {
+          if (
+            parsedUser &&
+            post.currentGroupMembers.length >= post.groupLimit &&
+            member.username === parsedUser.username
+          ) {
+            localStorage.setItem("newNotification", true);
+            console.log("true");
+          }
+        });
+      });
+    };
+    setNewNotifcation();
+  });
   const handleGroupJoin = async (postId, system, post) => {
     const joinedPosts = joined.groupId;
     const currentMembers = joined.groupMembers;
@@ -73,7 +98,7 @@ const Homepage = props => {
     }
     // Add their post id and gamertag to state to show they've joined the group and to show which button
     joinedPosts.push(postId);
-    currentMembers.push(parsedUser.gamertag);
+    currentMembers.push(parsedUser.username);
     currentMembers.push(postId);
     setJoined({
       joinedGroup: true,
@@ -103,10 +128,10 @@ const Homepage = props => {
       // Check if group members state contains the post id and if the group members state contains the users gamertag to show they've already joined
       (parsedUser &&
         joined.groupId.includes(post._id) &&
-        joined.groupMembers.includes(parsedUser.gamertag)) ||
+        joined.groupMembers.includes(parsedUser.username)) ||
       (currentMembers &&
         currentMembers.includes(post._id) &&
-        currentMembers.includes(parsedUser.gamertag))
+        currentMembers.includes(parsedUser.username))
     ) {
       return (
         <button className="joinButton">

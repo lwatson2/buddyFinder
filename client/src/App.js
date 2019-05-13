@@ -11,25 +11,29 @@ import {
   faGamepad,
   faClock,
   faUsers,
-  faCheck
+  faCheck,
+  faExclamation
 } from "@fortawesome/free-solid-svg-icons";
 import NewPost from "./components/newpost/NewPost";
+import { PostProvider } from "./components/context/PostContext";
 
-library.add(faBars, faGamepad, faClock, faUsers, faCheck);
+library.add(faBars, faGamepad, faClock, faUsers, faCheck, faExclamation);
 
 class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <div className="App">
-          <Header />
-          <Switch>
-            <Route exact path="/" component={Homepage} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/createnewpost" component={NewPost} />
-          </Switch>
-        </div>
+        <PostProvider>
+          <div className="App">
+            <Header />
+            <Switch>
+              <Route exact path="/" component={Homepage} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/createnewpost" component={NewPost} />
+            </Switch>
+          </div>
+        </PostProvider>
       </BrowserRouter>
     );
   }
