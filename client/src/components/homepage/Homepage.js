@@ -66,26 +66,45 @@ const Homepage = props => {
   }, []);
   useEffect(() => {
     const setNewNotifcation = async () => {
+      // Get all messages for the user
+      const res = await axios.get(
+        `/users/getNotifications/${parsedUser.username}`
+      );
       data.posts.map(post => {
         post.currentGroupMembers.map(member => {
+          // check if user is logged in and group is full and a groupmembers username is the same as the current logged in username
           if (
             parsedUser &&
             post.currentGroupMembers.length >= post.groupLimit &&
             member.username === parsedUser.username
           ) {
-            console.log(true);
-
-            axios.post("/users/setMessage", {
-              username: parsedUser.username,
-              postId: post._id
-            });
-            localStorage.setItem("viewed", false);
+            if (res.data.messages.length > 0) {
+              res.data.messages.map(message => {
+                //Check f postId in the message object is not the same as the post._id for any of the posts making sure the message isn't already in the database
+                if (message.postId !== post._id) {
+                  axios.post("/users/setMessage", {
+                    username: parsedUser.username,
+                    postId: post._id
+                  });
+                  return localStorage.setItem("viewed", false);
+                } else {
+                  console.log(false);
+                }
+              });
+            } else {
+              console.log("none");
+              axios.post("/users/setMessage", {
+                username: parsedUser.username,
+                postId: post._id
+              });
+              localStorage.setItem("viewed", false);
+            }
           }
         });
       });
     };
     setNewNotifcation();
-  });
+  }, [fullGroup]);
   const handleGroupJoin = async (postId, system, post) => {
     const joinedPosts = joined.groupId;
     const currentMembers = joined.groupMembers;

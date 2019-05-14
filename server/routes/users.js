@@ -132,8 +132,8 @@ router.post("/setMessage", async (req, res) => {
   console.log(req.body);
   User.findOneAndUpdate(
     { username: username },
-    { "messages.postId": { $ne: postId } },
-    { $push: { messages: { postId, viewed: false } } }
+    { $push: { messages: { postId: postId, viewed: false } } },
+    (err, doc) => console.log(doc)
   );
 }); /*   await User.findOneAndUpdate(
     { username: username },
@@ -174,6 +174,10 @@ router.get(`/getNotifications/:username`, async (req, res) => {
     if (user.messages && user.messages.length > 0) {
       res.json({
         messages: user.messages
+      });
+    } else {
+      res.json({
+        messages: []
       });
     }
   });
