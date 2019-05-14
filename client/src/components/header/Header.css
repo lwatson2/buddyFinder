@@ -14,6 +14,7 @@
   background: transparent;
   color: hsl(214, 33%, 97%);
   padding: 8px;
+  cursor: pointer;
 }
 .mainNavContainer button:hover {
   background-color: hsl(209, 20%, 25%);

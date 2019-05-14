@@ -14,20 +14,27 @@ const Header = props => {
   const user = sessionStorage.getItem("user");
   const token = sessionStorage.getItem("token");
   const parsedUser = JSON.parse(user);
-  const notification = localStorage.getItem("newNotification");
-
+  const viewed = localStorage.getItem("viewed");
+  console.log(viewed);
   useEffect(() => {
-    const checkNotications = () => {
-      if (user && notification) {
-        if (fullGroup.length > 0) {
+    const checkNotications = async () => {
+      if (user) {
+        const res = await axios.get(
+          `/users/getNotifications/${parsedUser.username}`
+        );
+        console.log(res.data);
+        res.data.messages.map(message => {
           fullGroup.map(group => {
-            group.currentMembers.map(member => {
-              if (member.username === parsedUser.username) {
-                setNewNotification(true);
-              }
-            });
+            if (
+              message.postId === group.postId &&
+              message.viewed === false &&
+              viewed &&
+              viewed !== true
+            ) {
+              setNewNotification(true);
+            }
           });
-        }
+        });
       }
     };
     checkNotications();
@@ -40,10 +47,14 @@ const Header = props => {
     setNewNotification(false);
     props.history.push("/");
   };
-  const removeNotification = () => {
+  const removeNotification = async () => {
     setshowNav(false);
+    localStorage.setItem("viewed", true);
+    await axios.post("/users/updateMessages", {
+      username: parsedUser.username,
+      fullGroup
+    });
     setNewNotification(false);
-    localStorage.removeItem("newNotification");
   };
   return (
     <nav

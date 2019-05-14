@@ -73,7 +73,6 @@ router.post("/register", (req, res) => {
       bcrypt.genSalt(saltRounds, (err, salt) => {
         bcrypt.hash(newuser.password, salt, async (err, hash) => {
           if (err) {
-            console.log(err);
           } else {
             newuser.password = hash;
             await newuser.save();
@@ -93,7 +92,6 @@ router.post("/login", (req, res, next) => {
     // passport uses the local strategy in the /config/passport file
 
     if (user) {
-      console.log("true");
       // If there's a user sign a jsonwebtoken with their creds and send that back to the client
       jwt.sign({ user }, "mysecretkey", { expiresIn: "1d" }, (err, token) => {
         res.json({
@@ -106,7 +104,6 @@ router.post("/login", (req, res, next) => {
         });
       });
     } else {
-      console.log("fasle");
       res.json({
         err: info
       });
@@ -128,5 +125,70 @@ router.get("/getuser/:id", async (req, res) => {
     user
   });
 });
+//Update notifications
+router.post("/setMessage", async (req, res) => {
+  const { postId, username } = req.body;
 
+  console.log(req.body);
+  User.findOneAndUpdate(
+    { username: username },
+    { "messages.postId": { $ne: postId } },
+    { $push: { messages: { postId, viewed: false } } }
+  );
+}); /*   await User.findOneAndUpdate(
+    { username: username },
+    { $push: { notifications: { postId: postId, viewed: false } } },
+    (err, doc) => {
+      if (err) {
+      }
+      res.sendStatus(200);
+    }
+  ); */ /* else if (messagesArray.length <= 0) {
+      console.log(messagesArray.length);
+      messagesArray.push({ postId, viewed: false });
+      console.log("boo");
+      res.sendStatus(200);
+      user.messages = messagesArray;
+      await user.save();
+    } */
+/* if (err) {
+    }
+    if (user.messages && user.messages.length > 0) {
+      user.messages.map(message => {
+        if (message.postId != postId) {
+          console.log("hi");
+          user.messages.push(...message, {
+            postId,
+            viewed: false
+          });
+        }
+      });
+      res.sendStatus(200);
+      await user.save();
+    } */
+
+router.get(`/getNotifications/:username`, async (req, res) => {
+  const { username } = req.params;
+
+  User.findOne({ username }, (err, user) => {
+    if (user.messages && user.messages.length > 0) {
+      res.json({
+        messages: user.messages
+      });
+    }
+  });
+});
+router.post("/updateMessages", async (req, res) => {
+  const { username, fullGroup } = req.body;
+  const user = await User.findOne({ username });
+  user.messages.map(message => {
+    fullGroup.map(group => {
+      if (group.postId === message.postId) {
+        message.viewed = true;
+      }
+    });
+  });
+  user.save();
+  res.sendStatus(200);
+});
 module.exports = router;

@@ -38,7 +38,11 @@ const Homepage = props => {
           if (post.currentGroupMembers.length >= post.groupLimit) {
             setFullGroup(prevState => [
               ...prevState,
-              { title: post.title, currentMembers: post.currentGroupMembers }
+              {
+                title: post.title,
+                postId: post._id,
+                currentMembers: post.currentGroupMembers
+              }
             ]);
           }
           post.currentGroupMembers.map(member => {
@@ -61,7 +65,7 @@ const Homepage = props => {
     getData();
   }, []);
   useEffect(() => {
-    const setNewNotifcation = () => {
+    const setNewNotifcation = async () => {
       data.posts.map(post => {
         post.currentGroupMembers.map(member => {
           if (
@@ -69,8 +73,13 @@ const Homepage = props => {
             post.currentGroupMembers.length >= post.groupLimit &&
             member.username === parsedUser.username
           ) {
-            localStorage.setItem("newNotification", true);
-            console.log("true");
+            console.log(true);
+
+            axios.post("/users/setMessage", {
+              username: parsedUser.username,
+              postId: post._id
+            });
+            localStorage.setItem("viewed", false);
           }
         });
       });
