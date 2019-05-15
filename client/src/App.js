@@ -16,6 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import NewPost from "./components/newpost/NewPost";
 import { PostProvider } from "./components/context/PostContext";
+import ProfilePage from "./components/profilepage/ProfilePage";
 
 library.add(faBars, faGamepad, faClock, faUsers, faCheck, faExclamation);
 
@@ -31,6 +32,7 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/createnewpost" component={NewPost} />
+              <Route exact path="/user/:username" component={ProfilePage} />
             </Switch>
           </div>
         </PostProvider>

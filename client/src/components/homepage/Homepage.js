@@ -67,44 +67,53 @@ const Homepage = props => {
   useEffect(() => {
     const setNewNotifcation = async () => {
       // Get all messages for the user
-      const res = await axios.get(
-        `/users/getNotifications/${parsedUser.username}`
-      );
-      data.posts.map(post => {
-        post.currentGroupMembers.map(member => {
-          // check if user is logged in and group is full and a groupmembers username is the same as the current logged in username
-          if (
-            parsedUser &&
-            post.currentGroupMembers.length >= post.groupLimit &&
-            member.username === parsedUser.username
-          ) {
-            if (res.data.messages.length > 0) {
-              res.data.messages.map(message => {
-                //Check f postId in the message object is not the same as the post._id for any of the posts making sure the message isn't already in the database
-                if (message.postId !== post._id) {
-                  axios.post("/users/setMessage", {
-                    username: parsedUser.username,
-                    postId: post._id
-                  });
-                  return localStorage.setItem("viewed", false);
-                } else {
-                  console.log(false);
-                }
-              });
-            } else {
-              console.log("none");
-              axios.post("/users/setMessage", {
-                username: parsedUser.username,
-                postId: post._id
-              });
-              localStorage.setItem("viewed", false);
+      let newArray;
+      if (parsedUser) {
+        const res = await axios.get(
+          `/users/getNotifications/${parsedUser.username}`
+        );
+        data.posts.map(post => {
+          post.currentGroupMembers.map(member => {
+            // check if user is logged in and group is full and a groupmembers username is the same as the current logged in username
+            if (
+              post.currentGroupMembers.length >= post.groupLimit &&
+              member.username === parsedUser.username
+            ) {
+              //Check if messages array has any values already in it before mapping
+              if (res.data.messages.length > 0) {
+                //Filter any post that is not already in the messages array
+                let result = data.posts.filter(({ _id }) =>
+                  res.data.messages.some(message => message.postId !== _id)
+                );
+                //Use .filter to go through ever message and check if the post id does not equal the messages post id and if they dont return them
+                newArray = result.filter(post =>
+                  res.data.messages.every(message => message.postId != post._id)
+                );
+              } else {
+                axios.post("/users/setMessage", {
+                  username: parsedUser.username,
+                  postId: post._id,
+                  title: post.title
+                });
+                localStorage.setItem("viewed", false);
+              }
             }
-          }
+          });
         });
-      });
+        if (newArray) {
+          newArray.map(post => {
+            axios.post("/users/setMessage", {
+              username: parsedUser.username,
+              postId: post._id,
+              title: post.title
+            });
+            localStorage.setItem("viewed", false);
+          });
+        }
+      }
     };
     setNewNotifcation();
-  }, [fullGroup]);
+  }, [data.posts]);
   const handleGroupJoin = async (postId, system, post) => {
     const joinedPosts = joined.groupId;
     const currentMembers = joined.groupMembers;

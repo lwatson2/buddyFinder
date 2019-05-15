@@ -127,12 +127,12 @@ router.get("/getuser/:id", async (req, res) => {
 });
 //Update notifications
 router.post("/setMessage", async (req, res) => {
-  const { postId, username } = req.body;
+  const { postId, username, title } = req.body;
 
-  console.log(req.body);
+  console.log(req.body.title);
   User.findOneAndUpdate(
     { username: username },
-    { $push: { messages: { postId: postId, viewed: false } } },
+    { $push: { messages: { postId: postId, viewed: false, title: title } } },
     (err, doc) => console.log(doc)
   );
 }); /*   await User.findOneAndUpdate(

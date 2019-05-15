@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const messageSchema = new mongoose.Schema({
   viewed: { type: Boolean, default: false },
-  postId: { type: String }
+  postId: { type: String },
+  title: { type: String }
 });
 
 const userSchema = new mongoose.Schema({

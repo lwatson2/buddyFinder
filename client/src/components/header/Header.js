@@ -50,10 +50,6 @@ const Header = props => {
   const removeNotification = async () => {
     setshowNav(false);
     localStorage.setItem("viewed", true);
-    await axios.post("/users/updateMessages", {
-      username: parsedUser.username,
-      fullGroup
-    });
     setNewNotification(false);
   };
   return (
