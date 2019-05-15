@@ -184,6 +184,7 @@ router.get(`/getNotifications/:username`, async (req, res) => {
 });
 router.post("/updateMessages", async (req, res) => {
   const { username, fullGroup } = req.body;
+  console.log(fullGroup);
   const user = await User.findOne({ username });
   user.messages.map(message => {
     fullGroup.map(group => {
