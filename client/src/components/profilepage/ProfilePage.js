@@ -38,6 +38,16 @@ const ProfilePage = () => {
             Gamertag: {parsedUser.gamertag}
           </li>
         </ul>
+        <div className="newMessagesContaier">
+          <p>My messages</p>
+          {messages.map(message => {
+            {
+              message.viewed === false && (
+                <div className="messageContaiter">{}</div>
+              );
+            }
+          })}
+        </div>
       </div>
     </main>
   );
