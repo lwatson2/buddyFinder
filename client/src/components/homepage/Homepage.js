@@ -85,7 +85,7 @@ const Homepage = props => {
                 let result = data.posts.filter(({ _id }) =>
                   res.data.messages.some(message => message.postId !== _id)
                 );
-                //Use .filter to go through ever message and check if the post id does not equal the messages post id and if they dont return them
+                //Use .filter to go through every message and check if the post id does not equal the messages post id and if they dont return them
                 newArray = result.filter(post =>
                   res.data.messages.every(message => message.postId != post._id)
                 );
