@@ -112,6 +112,51 @@
   display: -ms-flexbox;
   display: flex;
 }
+.profileFormGroupContainer {
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  width: 288px;
+}
+.profileFormGroupContainer input {
+  margin-left: 10px;
+  background: transparent;
+  border: 1px solid hsl(211, 10%, 53%);
+  border-radius: 3px;
+  padding: 2px;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  outline: none;
+}
+.profileFormGroupContainer input:focus {
+  border: 1px solid hsl(197, 92%, 61%);
+}
+.profileSystemSelect {
+  width: 110px;
+  margin-left: 10px;
+}
+.updateProfileForm {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  width: 100%;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+@media only screen and (min-width: 550px) {
+  .profileFormGroupContainer {
+    width: 350px;
+  }
+}
 @media only screen and (min-width: 767px) {
   .profileDetailsContainer {
     -webkit-box-orient: horizontal;
@@ -132,5 +177,22 @@
   .newMessage {
     -ms-flex-item-align: start;
     align-self: flex-start;
+  }
+  .profileFormGroupContainer {
+    width: 450px;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .updateProfileForm {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+  }
+  .profileFormGroupContainer {
+    width: auto;
   }
 }

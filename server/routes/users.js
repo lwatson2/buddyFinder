@@ -135,7 +135,14 @@ router.post("/setMessage", async (req, res) => {
     { $push: { messages: { postId: postId, viewed: false, title: title } } },
     (err, doc) => console.log(doc)
   );
-}); /*   await User.findOneAndUpdate(
+}); /* else if (messagesArray.length <= 0) {
+      console.log(messagesArray.length);
+      messagesArray.push({ postId, viewed: false });
+      console.log("boo");
+      res.sendStatus(200);
+      user.messages = messagesArray;
+      await user.save();
+    } */ /*   await User.findOneAndUpdate(
     { username: username },
     { $push: { notifications: { postId: postId, viewed: false } } },
     (err, doc) => {
@@ -143,14 +150,7 @@ router.post("/setMessage", async (req, res) => {
       }
       res.sendStatus(200);
     }
-  ); */ /* else if (messagesArray.length <= 0) {
-      console.log(messagesArray.length);
-      messagesArray.push({ postId, viewed: false });
-      console.log("boo");
-      res.sendStatus(200);
-      user.messages = messagesArray;
-      await user.save();
-    } */
+  ); */
 /* if (err) {
     }
     if (user.messages && user.messages.length > 0) {
@@ -184,7 +184,6 @@ router.get(`/getNotifications/:username`, async (req, res) => {
 });
 router.post("/updateMessages", async (req, res) => {
   const { username, fullGroup } = req.body;
-  console.log(fullGroup);
   const user = await User.findOne({ username });
   user.messages.map(message => {
     fullGroup.map(group => {

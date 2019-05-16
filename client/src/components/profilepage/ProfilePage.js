@@ -56,8 +56,38 @@ const ProfilePage = () => {
       <div className="updateProfileContainer">
         <p className="updateProfileTag">Update profile</p>
         <div className="updateProfileFormContainer">
-          <form>
-            <input type="text" name="username" id="username" />
+          <form className="updateProfileForm">
+            <div className="profileFormGroupContainer">
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                name="username"
+                id="username"
+                className="updateUsernameInput"
+              />
+            </div>
+            <div className="profileFormGroupContainer">
+              <label htmlFor="gamertag">Gamertag</label>
+              <input
+                type="text"
+                name="gamertag"
+                id="gamertag"
+                className="updateGamertagInput"
+              />
+            </div>
+            <div className="profileFormGroupContainer">
+              <label htmlFor="system">System</label>
+              <select className="profileSystemSelect" name="system" id="system">
+                <option default hidden />
+                <option value="Playstation">Playstation</option>
+                <option value="Xbox">Xbox</option>
+                <option value="Steam">Steam</option>
+                <option value="Switch">Switch</option>
+              </select>
+            </div>
+            <button type="submit" className="profileSubmitBtn">
+              Save
+            </button>
           </form>
         </div>
       </div>
