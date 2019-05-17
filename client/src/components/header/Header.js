@@ -19,9 +19,7 @@ const Header = props => {
   useEffect(() => {
     const checkNotications = async () => {
       if (user) {
-        const res = await axios.get(
-          `/users/getNotifications/${parsedUser.username}`
-        );
+        const res = await axios.get(`/users/getNotifications/${parsedUser.id}`);
         console.log(res.data);
         res.data.messages.map(message => {
           fullGroup.map(group => {

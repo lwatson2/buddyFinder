@@ -69,9 +69,7 @@ const Homepage = props => {
       // Get all messages for the user
       let newArray;
       if (parsedUser) {
-        const res = await axios.get(
-          `/users/getNotifications/${parsedUser.username}`
-        );
+        const res = await axios.get(`/users/getNotifications/${parsedUser.id}`);
         data.posts.map(post => {
           post.currentGroupMembers.map(member => {
             // check if user is logged in and group is full and a groupmembers username is the same as the current logged in username
@@ -93,7 +91,8 @@ const Homepage = props => {
                 axios.post("/users/setMessage", {
                   username: parsedUser.username,
                   postId: post._id,
-                  title: post.title
+                  title: post.title,
+                  id: parsedUser.id
                 });
                 localStorage.setItem("viewed", false);
               }
@@ -105,7 +104,8 @@ const Homepage = props => {
             axios.post("/users/setMessage", {
               username: parsedUser.username,
               postId: post._id,
-              title: post.title
+              title: post.title,
+              id: parsedUser.id
             });
             localStorage.setItem("viewed", false);
           });

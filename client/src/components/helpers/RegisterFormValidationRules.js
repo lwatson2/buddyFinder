@@ -9,6 +9,9 @@ const validate = values => {
   if (!values.gamertag) {
     errors.gamertag = "Gamertag is required";
   }
+  if (values.gamertag && values.gamertag.length > 75) {
+    errors.gamertag = "Gamertag cannot be greater than 75 characters";
+  }
   if (!values.password) {
     errors.password = "Password is required";
   }

@@ -6,6 +6,7 @@ const passport = require("passport");
 const { verifyToken } = require("../config/jwt");
 const User = require("../models/User");
 const LocalStrategy = require("passport-local").Strategy;
+const mongoose = require("mongoose");
 
 const saltRounds = 10;
 
@@ -99,7 +100,8 @@ router.post("/login", (req, res, next) => {
           user: {
             username: user.username,
             gamertag: user.gamertag,
-            system: user.system
+            system: user.system,
+            id: user._id
           }
         });
       });
@@ -127,11 +129,11 @@ router.get("/getuser/:id", async (req, res) => {
 });
 //Update notifications
 router.post("/setMessage", async (req, res) => {
-  const { postId, username, title } = req.body;
+  const { postId, username, title, id } = req.body;
 
   console.log(req.body.title);
   User.findOneAndUpdate(
-    { username: username },
+    { _id: id },
     { $push: { messages: { postId: postId, viewed: false, title: title } } },
     (err, doc) => console.log(doc)
   );
@@ -167,10 +169,10 @@ router.post("/setMessage", async (req, res) => {
       await user.save();
     } */
 
-router.get(`/getNotifications/:username`, async (req, res) => {
-  const { username } = req.params;
+router.get(`/getNotifications/:id`, async (req, res) => {
+  const { id } = req.params;
 
-  User.findOne({ username }, (err, user) => {
+  User.findOne({ _id: mongoose.Types.ObjectId(id) }, (err, user) => {
     if (user.messages && user.messages.length > 0) {
       res.json({
         messages: user.messages
@@ -194,5 +196,40 @@ router.post("/updateMessages", async (req, res) => {
   });
   user.save();
   res.sendStatus(200);
+});
+router.post("/update/:id", async (req, res) => {
+  const { username, gamertag, system } = req.body;
+  const { id } = req.params;
+  if (!username && !gamertag) {
+    return User.update({ _id: id }, { $set: { system: system } });
+  }
+  if (!username && !system) {
+    return User.update({ _id: id }, { $set: { gamertag: gamertag } });
+  }
+  if (!gamertag && !system) {
+    return User.update({ _id: id }, { $set: { username: username } });
+  }
+  if (!username) {
+    return User.update(
+      { _id: id },
+      { $set: { gamertag: gamertag, system: system } }
+    );
+  }
+  if (!gamertag) {
+    return User.update(
+      { _id: id },
+      { $set: { username: username, system: system } }
+    );
+  }
+  if (!system) {
+    return User.update(
+      { _id: id },
+      { $set: { username: username, gamertag: gamertag } }
+    );
+  }
+  return User.update(
+    { _id: id },
+    { $set: { username: username, gamertag: gamertag, system: system } }
+  );
 });
 module.exports = router;
