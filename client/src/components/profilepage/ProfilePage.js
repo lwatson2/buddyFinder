@@ -9,7 +9,6 @@ const ProfilePage = () => {
   const [messages, setMessages] = useState([]);
   const user = sessionStorage.getItem("user");
   const [fullGroup, setFullGroup] = useContext(PostContext);
-
   const parsedUser = JSON.parse(user);
   useEffect(() => {
     const getMessages = async () => {

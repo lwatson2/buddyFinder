@@ -8,14 +8,15 @@ const NewPost = props => {
   const [newPostError, setNewPostError] = useState(false);
   const handleNewPostSubmit = async () => {
     const { time, groupLimit, title, gameName } = values;
-    const username = sessionStorage.getItem("username");
+    const user = sessionStorage.getItem("user");
+    const parsedUser = JSON.parse(user);
     const data = {
       time,
       groupLimit,
       title,
       gameName,
-      username,
-      currentGroupMembers: username
+      username: parsedUser.username,
+      currentGroupMembers: parsedUser
     };
     const res = await axios.post("/posts/newpost", data);
     console.log(res.data);

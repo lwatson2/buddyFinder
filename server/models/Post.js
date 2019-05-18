@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const currentGroupMembersSchema = new mongoose.Schema({
   username: String,
   gamertag: String,
-  system: String
+  system: String,
+  id: String
 });
 const PostSchema = new mongoose.Schema({
   username: { type: String, trim: true },

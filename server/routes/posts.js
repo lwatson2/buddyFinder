@@ -12,17 +12,15 @@ router.post("/newpost", async (req, res) => {
     title,
     currentGroupMembers
   } = req.body;
-  console.log(req.body);
-  const user = await User.findOne({ username: username });
-  const { gamertag, system } = user;
-  const rando = "ChildishBambino";
+  const { gamertag, id, system } = currentGroupMembers;
+
   const newPost = new Post({
     username,
     time,
     groupLimit,
     gameName,
     title,
-    currentGroupMembers: [{ username, system, gamertag }],
+    currentGroupMembers: [{ username, system, gamertag, id }],
     gamertag,
     system
   });
