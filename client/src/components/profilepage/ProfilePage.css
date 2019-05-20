@@ -152,6 +152,21 @@
   -ms-flex-align: center;
   align-items: center;
 }
+.profileSubmitBtn {
+  background: hsl(197, 92%, 61%);
+  color: hsl(210, 24%, 16%);
+  border: none;
+  width: 58px;
+  height: 31px;
+  border-radius: 6px;
+  -webkit-transition: all 0.5s ease-in;
+  transition: all 0.5s ease-in;
+  cursor: pointer;
+}
+.profileSubmitBtn:hover {
+  background: hsl(202, 83%, 41%);
+}
+
 @media only screen and (min-width: 550px) {
   .profileFormGroupContainer {
     width: 350px;
@@ -189,8 +204,8 @@
     -ms-flex-direction: row;
     flex-direction: row;
     -webkit-box-pack: space-evenly;
-        -ms-flex-pack: space-evenly;
-            justify-content: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
   }
   .profileFormGroupContainer {
     width: auto;

@@ -131,43 +131,12 @@ router.get("/getuser/:id", async (req, res) => {
 router.post("/setMessage", async (req, res) => {
   const { postId, username, title, id } = req.body;
 
-  console.log(req.body.title);
   User.findOneAndUpdate(
     { _id: id },
     { $push: { messages: { postId: postId, viewed: false, title: title } } },
     (err, doc) => console.log(doc)
   );
-}); /* else if (messagesArray.length <= 0) {
-      console.log(messagesArray.length);
-      messagesArray.push({ postId, viewed: false });
-      console.log("boo");
-      res.sendStatus(200);
-      user.messages = messagesArray;
-      await user.save();
-    } */ /*   await User.findOneAndUpdate(
-    { username: username },
-    { $push: { notifications: { postId: postId, viewed: false } } },
-    (err, doc) => {
-      if (err) {
-      }
-      res.sendStatus(200);
-    }
-  ); */
-/* if (err) {
-    }
-    if (user.messages && user.messages.length > 0) {
-      user.messages.map(message => {
-        if (message.postId != postId) {
-          console.log("hi");
-          user.messages.push(...message, {
-            postId,
-            viewed: false
-          });
-        }
-      });
-      res.sendStatus(200);
-      await user.save();
-    } */
+});
 
 router.get(`/getNotifications/:id`, async (req, res) => {
   const { id } = req.params;

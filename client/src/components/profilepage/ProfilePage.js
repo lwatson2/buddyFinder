@@ -7,6 +7,7 @@ import validate from "../helpers/ProfilePageValidationRules";
 
 const ProfilePage = () => {
   const [messages, setMessages] = useState([]);
+  const [joinedPosts, setJoinedPosts] = useState([]);
   const user = sessionStorage.getItem("user");
   const [fullGroup, setFullGroup] = useContext(PostContext);
   const parsedUser = JSON.parse(user);
@@ -19,7 +20,13 @@ const ProfilePage = () => {
         fullGroup
       });
     };
+    const getUserPosts = async () => {
+      const response = await axios.get(
+        `/posts/fetchUserPosts/${parsedUser.id}`
+      );
+    };
     getMessages();
+    getUserPosts();
   }, []);
   const handleSave = async () => {
     axios.post(`/users/update/${parsedUser.id}`, {

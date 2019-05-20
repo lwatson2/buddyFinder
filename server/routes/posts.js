@@ -45,7 +45,6 @@ router.post("/joinPost", async (req, res) => {
   const { parsedUser } = req.body;
   const { username, gamertag, system } = parsedUser;
   const { postId } = req.body;
-  console.log(username);
   Post.findOneAndUpdate(
     { _id: postId },
     {
@@ -59,11 +58,19 @@ router.post("/joinPost", async (req, res) => {
     },
     (err, doc) => {
       if (err) {
+        params;
         console.log(err);
       }
       res.sendStatus(200);
     }
   );
+});
+router.get("/fetchUserPosts/:id", async (req, res) => {
+  const { id } = req.params;
+  const userPosts = await Post.find({ "currentGroupMembers.id": { $all: id } });
+  res.json({
+    posts: userPosts
+  });
 });
 
 module.exports = router;

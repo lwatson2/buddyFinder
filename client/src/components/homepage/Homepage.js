@@ -29,7 +29,8 @@ const Homepage = props => {
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get("/posts/getposts");
-      setData({ posts: res.data.posts });
+      const reversedArray = res.data.posts.reverse();
+      setData({ posts: reversedArray });
       //If user is logged in check to see if they are apart of current group members array
       if (user) {
         const joinedPosts = joined.groupId;
@@ -75,14 +76,18 @@ const Homepage = props => {
             // check if user is logged in and group is full and a groupmembers username is the same as the current logged in username
             if (
               post.currentGroupMembers.length >= post.groupLimit &&
-              member.username === parsedUser.username
+              member.id === parsedUser.id
             ) {
               //Check if messages array has any values already in it before mapping
               if (res.data.messages.length > 0) {
                 //Filter any post that is not already in the messages array
-                let result = data.posts.filter(({ _id }) =>
-                  res.data.messages.some(message => message.postId !== _id)
-                );
+                let result = [];
+
+                if (
+                  res.data.messages.some(message => message.postId !== post._id)
+                ) {
+                  result.push(post);
+                }
                 //Use .filter to go through every message and check if the post id does not equal the messages post id and if they dont return them
                 newArray = result.filter(post =>
                   res.data.messages.every(message => message.postId != post._id)
