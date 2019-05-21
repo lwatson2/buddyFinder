@@ -120,9 +120,9 @@ router.get("/logout", (req, res) => {
 
 // Route to get user info for post details
 router.get("/getuser/:id", async (req, res) => {
-  const { username } = req.body;
+  const { id } = req.body;
   // Find user by username and send that data back to the client
-  const user = await User.findOne({ username });
+  const user = await User.findOne({ _id: id });
   res.json({
     user
   });
@@ -136,6 +136,7 @@ router.post("/setMessage", async (req, res) => {
     { $push: { messages: { postId: postId, viewed: false, title: title } } },
     (err, doc) => console.log(doc)
   );
+  res.sendStatus(200);
 });
 
 router.get(`/getNotifications/:id`, async (req, res) => {
@@ -154,8 +155,8 @@ router.get(`/getNotifications/:id`, async (req, res) => {
   });
 });
 router.post("/updateMessages", async (req, res) => {
-  const { username, fullGroup } = req.body;
-  const user = await User.findOne({ username });
+  const { id, fullGroup } = req.body;
+  const user = await User.findOne({ _id: id });
   user.messages.map(message => {
     fullGroup.map(group => {
       if (group.postId === message.postId) {

@@ -7,6 +7,7 @@ const currentGroupMembersSchema = new mongoose.Schema({
 });
 const PostSchema = new mongoose.Schema({
   username: { type: String, trim: true },
+  id: String,
   title: { type: String, trim: true },
   time: { type: String, trim: true },
   groupLimit: Number,

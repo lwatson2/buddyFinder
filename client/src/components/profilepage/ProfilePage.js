@@ -4,6 +4,7 @@ import axios from "axios";
 import { PostContext } from "./../context/PostContext";
 import useForm from "../helpers/FormHelper";
 import validate from "../helpers/ProfilePageValidationRules";
+import Post from "../post/Post";
 
 const ProfilePage = () => {
   const [messages, setMessages] = useState([]);
@@ -16,7 +17,7 @@ const ProfilePage = () => {
       const res = await axios.get(`/users/getNotifications/${parsedUser.id}`);
       setMessages(res.data.messages);
       await axios.post("/users/updateMessages", {
-        username: parsedUser.username,
+        id: parsedUser.id,
         fullGroup
       });
     };
@@ -24,16 +25,33 @@ const ProfilePage = () => {
       const response = await axios.get(
         `/posts/fetchUserPosts/${parsedUser.id}`
       );
+      setJoinedPosts(response.data.posts);
     };
     getMessages();
     getUserPosts();
   }, []);
   const handleSave = async () => {
-    axios.post(`/users/update/${parsedUser.id}`, {
+    await axios.post(`/users/update/${parsedUser.id}`, {
       username: values.username,
       gamertag: values.gamertag,
       system: values.system
     });
+    const res = await axios.get(`/users/getuser/${parsedUser.id}`);
+    sessionStorage.setItem("user", res.data);
+  };
+  const setFilter = async e => {
+    let { name, value } = e.target;
+    const response = await axios.get(`/posts/fetchUserPosts/${parsedUser.id}`);
+    let newArray = response.data.posts;
+    if (value === "created") {
+      let filtered = newArray.filter(post => post.id === parsedUser.id);
+      return setJoinedPosts(filtered);
+    }
+    if (value === "joined") {
+      let filtered = newArray.filter(post => post.id !== parsedUser.id);
+      return setJoinedPosts(filtered);
+    }
+    return setJoinedPosts(newArray);
   };
   const { values, errors, handleChange, handleSubmit } = useForm(
     handleSave,
@@ -56,7 +74,7 @@ const ProfilePage = () => {
       </div>
       <div className="newMessagesContainer">
         <p className="myMessagesTag">My messages</p>
-        <div className="messagesContaier">
+        <div className="messagesContainer">
           {messages.map(
             message =>
               message.viewed === false && (
@@ -115,6 +133,30 @@ const ProfilePage = () => {
               Save
             </button>
           </form>
+        </div>
+      </div>
+      <div className="myGroupsContainer">
+        <div className="groupTextContainer">
+          <p className="myGroupsTag">My Groups</p>
+          <select
+            className="filterSelect"
+            name="filter"
+            id="filter"
+            value={values.filter || ""}
+            onChange={setFilter}
+          >
+            <option default value="all" hidden>
+              Filter
+            </option>
+            <option value="created">Created</option>
+            <option value="joined">Joined</option>
+            <option value="all">All</option>
+          </select>
+        </div>
+        <div className="groupWrapper">
+          {joinedPosts.map(post => (
+            <Post homePage={false} post={post} />
+          ))}
         </div>
       </div>
     </main>

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Homepage.css";
 import axios from "axios";
 import { PostContext } from "./../context/PostContext";
+import Post from "../post/Post";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //xbox color hsl(120, 100%, 47%)
 // Steam color #1b2838
@@ -29,6 +29,7 @@ const Homepage = props => {
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get("/posts/getposts");
+      console.log(res.data);
       const reversedArray = res.data.posts.reverse();
       setData({ posts: reversedArray });
       //If user is logged in check to see if they are apart of current group members array
@@ -89,9 +90,14 @@ const Homepage = props => {
                   result.push(post);
                 }
                 //Use .filter to go through every message and check if the post id does not equal the messages post id and if they dont return them
-                newArray = result.filter(post =>
-                  res.data.messages.every(message => message.postId != post._id)
+                let filtered = result.filter(post =>
+                  res.data.messages.every(
+                    message => message.postId !== post._id
+                  )
                 );
+                if (filtered.length > 0) {
+                  newArray = filtered;
+                }
               } else {
                 axios.post("/users/setMessage", {
                   username: parsedUser.username,
@@ -105,6 +111,7 @@ const Homepage = props => {
           });
         });
         if (newArray) {
+          console.log(newArray);
           newArray.map(post => {
             axios.post("/users/setMessage", {
               username: parsedUser.username,
@@ -196,77 +203,16 @@ const Homepage = props => {
       );
     }
   };
-  const changeSystem = system => {
-    switch (system) {
-      default:
-        return "";
-      case "Playstation":
-        return "Psn";
-      case "Steam":
-        return "Steam";
-      case "Xbox":
-        return "Xbox";
-      case "Switch":
-        return "Switch";
-    }
-  };
-  const changeStyle = system => {
-    switch (system) {
-      default:
-        return "";
-      case "Playstation":
-        return "psnGamertag";
-      case "Steam":
-        return "steamGamertag";
-      case "Xbox":
-        return "xboxGamertag";
-      case "Switch":
-        return "switchGamertag";
-    }
-  };
+
   return (
     <main className="homepageContainer">
       {data.posts.map((post, index) => (
-        <div key={post._id} className="postBoxContainer">
-          {error.isError && error.groupId === post._id && (
-            <div className="postErrorMessageContainer">
-              <span className="postErrorMessage">{error.errorMsg}</span>
-            </div>
-          )}
-          <div className="postListsContainer">
-            <ul className="postDetailList">
-              <li className="postListItem" key={post.title}>
-                {post.title}
-              </li>
-              <li className="postListItem" key={post.system}>
-                {" "}
-                <FontAwesomeIcon icon="gamepad" /> {post.system}{" "}
-              </li>
-              <li className="postListItem" key={post.gameName}>
-                <FontAwesomeIcon icon="gamepad" /> {post.gameName}
-              </li>
-              <li className="postListItem" key={post.time}>
-                <FontAwesomeIcon icon="clock" /> {post.time}
-              </li>
-              <li className="postListItem" key={post.groupLimit}>
-                <FontAwesomeIcon icon="users" />{" "}
-                {post.currentGroupMembers.length} / {post.groupLimit} members
-              </li>
-            </ul>
-
-            <div className="currentMembersContainer">
-              {post.currentGroupMembers.map(member => (
-                <div key={member.username} className="memberNameContainer">
-                  <span className="memberName">{member.username}</span>
-                  <span className={changeStyle(member.system)}>
-                    {changeSystem(member.system)} id: {member.gamertag}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-          {checkIfJoined(post)}
-        </div>
+        <Post
+          homePage={true}
+          checkIfJoined={checkIfJoined}
+          error={error}
+          post={post}
+        />
       ))}
     </main>
   );

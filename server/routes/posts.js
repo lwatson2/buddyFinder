@@ -20,6 +20,7 @@ router.post("/newpost", async (req, res) => {
     groupLimit,
     gameName,
     title,
+    id,
     currentGroupMembers: [{ username, system, gamertag, id }],
     gamertag,
     system
@@ -43,7 +44,7 @@ router.get("/getPosts", async (req, res) => {
 });
 router.post("/joinPost", async (req, res) => {
   const { parsedUser } = req.body;
-  const { username, gamertag, system } = parsedUser;
+  const { username, gamertag, system, id } = parsedUser;
   const { postId } = req.body;
   Post.findOneAndUpdate(
     { _id: postId },
@@ -52,7 +53,8 @@ router.post("/joinPost", async (req, res) => {
         currentGroupMembers: {
           username: username,
           system: system,
-          gamertag: gamertag
+          gamertag: gamertag,
+          id: id
         }
       }
     },

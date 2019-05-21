@@ -1,0 +1,195 @@
+.homepageContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.postBoxContainer {
+  background: aquamarine;
+  background: hsl(203, 87%, 34%);
+  width: 300px;
+  border-radius: 10px;
+  position: relative;
+  margin-bottom: 50px;
+  color: hsl(216, 33%, 97%);
+}
+.postListsContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+.postListItem {
+  padding: 10px;
+}
+.postDetailList {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  padding: 15px;
+  margin: 0;
+}
+.currentMembersContainer {
+  padding: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-flow: wrap;
+  flex-flow: wrap;
+}
+.memberNameContainer {
+  padding-bottom: 15px;
+  padding-right: 10px;
+}
+.joinButton {
+  border: none;
+  width: 100%;
+  height: 30px;
+  cursor: pointer;
+  background: hsl(196, 77%, 56%);
+  font-size: 20px;
+  border-radius: 0px 0px 10px 10px;
+}
+.memberName {
+  padding-right: 1em;
+}
+.memberGamertag {
+  padding: 3px;
+  border-radius: 6px;
+}
+.psnGamertag {
+  padding: 3px;
+  border-radius: 6px;
+  background: hsl(200, 72%, 55%);
+  color: hsl(209, 20%, 16%);
+}
+.xboxGamertag {
+  padding: 3px;
+  border-radius: 6px;
+  background: hsl(120, 100%, 47%);
+  color: hsl(209, 20%, 16%);
+}
+.steamGamertag {
+  padding: 3px;
+  color: hsl(216, 33%, 97%);
+  border-radius: 6px;
+  background: #1b2838;
+}
+.switchGamertag {
+  background: hsl(348, 100%, 54%);
+  padding: 3px;
+  border-radius: 6px;
+  color: hsl(209, 12%, 0%);
+}
+.postErrorMessageContainer {
+  position: absolute;
+  color: hsl(216, 20%, 25%);
+  background: hsla(0, 100%, 80%, 1);
+  bottom: -39px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 300px;
+  height: 30px;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  left: 50%;
+  border-radius: 6px;
+}
+@media only screen and (min-width: 650px) {
+  .postListsContainer {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-box-pack: space-evenly;
+    -ms-flex-pack: space-evenly;
+    justify-content: space-evenly;
+  }
+  .postBoxContainer {
+    width: 575px;
+  }
+  .postDetailList {
+    width: 200px;
+  }
+  .currentMembersContainer {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  .memberNameContainer {
+    padding-bottom: 15px;
+    padding-right: 10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+  }
+  .joinButton {
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    width: 200px;
+    margin-left: auto;
+    -webkit-transition: all 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
+    border-radius: 0px 0px 10px;
+  }
+  .joinButton:hover {
+    border-radius: 10px 0px 10px 0px;
+    background: hsl(196, 94%, 67%);
+  }
+  .postErrorMessageContainer {
+    width: 367px;
+  }
+}
+@media only screen and (min-width: 800px) {
+  .postBoxContainer {
+    width: 650px;
+  }
+  .postErrorMessageContainer {
+    width: 367px;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  .postBoxContainer {
+    width: 720px;
+  }
+  .postErrorMessageContainer {
+    width: 367px;
+  }
+}
