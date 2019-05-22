@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import useForm from "../helpers/FormHelper";
 import validate from "../helpers/NewPostValidationRules";
 import "./NewPost.css";
@@ -6,15 +6,17 @@ import axios from "axios";
 
 const NewPost = props => {
   const [newPostError, setNewPostError] = useState(false);
+  const user = sessionStorage.getItem("user");
+  const parsedUser = JSON.parse(user);
   const handleNewPostSubmit = async () => {
     const { time, groupLimit, title, gameName } = values;
-    const user = sessionStorage.getItem("user");
-    const parsedUser = JSON.parse(user);
+
     const data = {
       time,
       groupLimit,
       title,
       gameName,
+      id: parsedUser.id,
       username: parsedUser.username,
       currentGroupMembers: parsedUser
     };
@@ -91,14 +93,14 @@ const NewPost = props => {
               value={values.groupLimit || ""}
             >
               <option defaultValue hidden />
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
+              <option value="2">1</option>
+              <option value="3">2</option>
+              <option value="4">3</option>
+              <option value="5">4</option>
+              <option value="6">5</option>
+              <option value="7">6</option>
+              <option value="8">7</option>
+              <option value="9">8</option>
             </select>
             {errors.groupLimit && (
               <div className="newPostErrorWrapper">

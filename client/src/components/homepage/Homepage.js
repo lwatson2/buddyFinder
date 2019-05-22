@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { PostContext } from "./../context/PostContext";
-import Post from "../post/Post";
+import HomePagePostDesign from "../homepagePostDesign/HomePagePostDesgin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 //xbox color hsl(120, 100%, 47%)
@@ -207,7 +207,7 @@ const Homepage = props => {
   return (
     <main className="homepageContainer">
       {data.posts.map((post, index) => (
-        <Post
+        <HomePagePostDesign
           homePage={true}
           checkIfJoined={checkIfJoined}
           error={error}

@@ -120,11 +120,16 @@ router.get("/logout", (req, res) => {
 
 // Route to get user info for post details
 router.get("/getuser/:id", async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   // Find user by username and send that data back to the client
   const user = await User.findOne({ _id: id });
   res.json({
-    user
+    user: {
+      username: user.username,
+      gamertag: user.gamertag,
+      system: user.system,
+      id: user._id
+    }
   });
 });
 //Update notifications
@@ -134,7 +139,7 @@ router.post("/setMessage", async (req, res) => {
   User.findOneAndUpdate(
     { _id: id },
     { $push: { messages: { postId: postId, viewed: false, title: title } } },
-    (err, doc) => console.log(doc)
+    (err, doc) => console.log(err)
   );
   res.sendStatus(200);
 });
@@ -171,32 +176,39 @@ router.post("/update/:id", async (req, res) => {
   const { username, gamertag, system } = req.body;
   const { id } = req.params;
   if (!username && !gamertag) {
+    res.sendStatus(200);
     return User.update({ _id: id }, { $set: { system: system } });
   }
   if (!username && !system) {
+    res.sendStatus(200);
     return User.update({ _id: id }, { $set: { gamertag: gamertag } });
   }
   if (!gamertag && !system) {
+    res.sendStatus(200);
     return User.update({ _id: id }, { $set: { username: username } });
   }
   if (!username) {
+    res.sendStatus(200);
     return User.update(
       { _id: id },
       { $set: { gamertag: gamertag, system: system } }
     );
   }
   if (!gamertag) {
+    res.sendStatus(200);
     return User.update(
       { _id: id },
       { $set: { username: username, system: system } }
     );
   }
   if (!system) {
+    res.sendStatus(200);
     return User.update(
       { _id: id },
       { $set: { username: username, gamertag: gamertag } }
     );
   }
+  res.sendStatus(200);
   return User.update(
     { _id: id },
     { $set: { username: username, gamertag: gamertag, system: system } }

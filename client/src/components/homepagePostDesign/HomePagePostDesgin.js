@@ -1,7 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./Post.css";
-const Post = props => {
+import "./HomePagePostDesign.css";
+
+const HomePagePostDesign = props => {
   const changeSystem = system => {
     switch (system) {
       default:
@@ -75,4 +76,4 @@ const Post = props => {
     </div>
   );
 };
-export default Post;
+export default HomePagePostDesign;

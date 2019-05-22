@@ -4,16 +4,20 @@ import axios from "axios";
 import { PostContext } from "./../context/PostContext";
 import useForm from "../helpers/FormHelper";
 import validate from "../helpers/ProfilePageValidationRules";
-import Post from "../post/Post";
+import ProfilePagePostDesign from "../profilePagePostDesign/ProfilePagePostDesign";
 
 const ProfilePage = () => {
   const [messages, setMessages] = useState([]);
   const [joinedPosts, setJoinedPosts] = useState([]);
-  const user = sessionStorage.getItem("user");
+  const [user, setUser] = useState({});
+  const usercreds = sessionStorage.getItem("user");
   const [fullGroup, setFullGroup] = useContext(PostContext);
-  const parsedUser = JSON.parse(user);
+  const parsedUser = JSON.parse(usercreds);
+
   useEffect(() => {
     const getMessages = async () => {
+      setUser(parsedUser);
+      console.log(user);
       const res = await axios.get(`/users/getNotifications/${parsedUser.id}`);
       setMessages(res.data.messages);
       await axios.post("/users/updateMessages", {
@@ -36,12 +40,15 @@ const ProfilePage = () => {
       gamertag: values.gamertag,
       system: values.system
     });
+    console.log(parsedUser.id);
     const res = await axios.get(`/users/getuser/${parsedUser.id}`);
-    sessionStorage.setItem("user", res.data);
+    sessionStorage.setItem("user", JSON.stringify(res.data.user));
+    setUser(res.data.user);
   };
   const setFilter = async e => {
     let { name, value } = e.target;
     const response = await axios.get(`/posts/fetchUserPosts/${parsedUser.id}`);
+    console.log(value);
     let newArray = response.data.posts;
     if (value === "created") {
       let filtered = newArray.filter(post => post.id === parsedUser.id);
@@ -51,7 +58,15 @@ const ProfilePage = () => {
       let filtered = newArray.filter(post => post.id !== parsedUser.id);
       return setJoinedPosts(filtered);
     }
-    return setJoinedPosts(newArray);
+    if (value === "full") {
+      let filtered = newArray.filter(
+        post => post.currentGroupMembers.length >= post.groupLimit
+      );
+      return setJoinedPosts(filtered);
+    }
+    if (value === "all") {
+      return setJoinedPosts(newArray);
+    }
   };
   const { values, errors, handleChange, handleSubmit } = useForm(
     handleSave,
@@ -61,14 +76,14 @@ const ProfilePage = () => {
     <main className="profilePageContainer">
       <div className="profileDetailsContainer">
         <ul className="profileListContainer">
-          <li className="usernameListItem" key={parsedUser.username}>
-            Username: {parsedUser.username}
+          <li className="usernameListItem" key={user.username}>
+            Username: {user.username}
           </li>
-          <li className="systemListItem" key={parsedUser.system}>
-            System: {parsedUser.system}
+          <li className="systemListItem" key={user.system}>
+            System: {user.system}
           </li>
-          <li className="gamertagListItem" key={parsedUser.gamertag}>
-            Gamertag: {parsedUser.gamertag}
+          <li className="gamertagListItem" key={user.gamertag}>
+            Gamertag: {user.gamertag}
           </li>
         </ul>
       </div>
@@ -151,11 +166,12 @@ const ProfilePage = () => {
             <option value="created">Created</option>
             <option value="joined">Joined</option>
             <option value="all">All</option>
+            <option value="full">Full Groups</option>
           </select>
         </div>
         <div className="groupWrapper">
           {joinedPosts.map(post => (
-            <Post homePage={false} post={post} />
+            <ProfilePagePostDesign post={post} />
           ))}
         </div>
       </div>
