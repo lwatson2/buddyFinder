@@ -29,7 +29,6 @@ const Homepage = props => {
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get("/posts/getposts");
-      console.log(res.data);
       const reversedArray = res.data.posts.reverse();
       setData({ posts: reversedArray });
       //If user is logged in check to see if they are apart of current group members array
@@ -111,7 +110,6 @@ const Homepage = props => {
           });
         });
         if (newArray) {
-          console.log(newArray);
           newArray.map(post => {
             axios.post("/users/setMessage", {
               username: parsedUser.username,
@@ -212,6 +210,7 @@ const Homepage = props => {
           checkIfJoined={checkIfJoined}
           error={error}
           post={post}
+          key={index}
         />
       ))}
     </main>

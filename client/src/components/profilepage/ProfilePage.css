@@ -15,7 +15,7 @@
 }
 .profileDetailsContainer {
   width: 75%;
-  background: beige;
+  background: hsla(197, 76%, 46%, 0.5);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -23,6 +23,7 @@
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+  color: hsl(210, 16%, 24%);
 }
 .profileListContainer {
   display: -webkit-box;
@@ -60,11 +61,13 @@
   -ms-flex-align: start;
   align-items: flex-start;
 }
-.myMessagesTag {
-  border-bottom: 1px solid;
-  padding-bottom: 10px;
-  padding-left: 8px;
+.myMessagesTagContainer {
   width: 100%;
+  border-bottom: 1px solid hsl(202, 83%, 42%);
+}
+.myMessagesTag {
+  margin-left: 8px;
+  width: 100px;
   text-align: left;
 }
 .messagesContainer {
@@ -81,7 +84,6 @@
   display: -ms-flexbox;
   display: flex;
   width: 281px;
-  background: beige;
   height: 75px;
   margin: 1em;
   border: 1px solid hsl(196, 77%, 46%);
@@ -97,14 +99,17 @@
   margin: 10px;
 }
 .updateProfileContainer {
-  background: beige;
   width: 100%;
+  color: hsl(210, 20%, 25%);
+}
+.updateProfileTagContainer {
+  width: 100%;
+  border-bottom: 1px solid hsl(202, 83%, 42%);
 }
 .updateProfileTag {
   text-align: left;
-  border-bottom: 1px solid;
-  padding-bottom: 10px;
-  padding-left: 8px;
+  width: 123px;
+  margin-left: 8px;
 }
 .updateProfileFormContainer {
   margin: 1em;
@@ -138,6 +143,7 @@
 .profileSystemSelect {
   width: 110px;
   margin-left: 10px;
+  cursor: pointer;
 }
 .updateProfileForm {
   display: -webkit-box;
@@ -174,14 +180,14 @@
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
+  flex-wrap: wrap;
   -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
 }
 .groupTextContainer {
   width: 100%;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid hsl(202, 83%, 42%);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -192,6 +198,7 @@
   -ms-flex-align: center;
   align-items: center;
   margin-bottom: 20px;
+  color: hsl(210, 20%, 25%);
 }
 .myGroupsTag {
   padding-left: 8px;
@@ -204,6 +211,7 @@
   font-weight: 700;
   color: hsl(209, 24%, 16%);
   background-color: hsl(210, 16%, 82%);
+  margin-right: 5px;
 }
 @media only screen and (min-width: 550px) {
   .profileFormGroupContainer {

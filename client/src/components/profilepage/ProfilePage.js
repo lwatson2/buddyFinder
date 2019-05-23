@@ -17,7 +17,6 @@ const ProfilePage = () => {
   useEffect(() => {
     const getMessages = async () => {
       setUser(parsedUser);
-      console.log(user);
       const res = await axios.get(`/users/getNotifications/${parsedUser.id}`);
       setMessages(res.data.messages);
       await axios.post("/users/updateMessages", {
@@ -88,7 +87,9 @@ const ProfilePage = () => {
         </ul>
       </div>
       <div className="newMessagesContainer">
-        <p className="myMessagesTag">My messages</p>
+        <div className="myMessagesTagContainer">
+          <p className="myMessagesTag">My messages</p>
+        </div>
         <div className="messagesContainer">
           {messages.map(
             message =>
@@ -103,7 +104,9 @@ const ProfilePage = () => {
         </div>
       </div>
       <div className="updateProfileContainer">
-        <p className="updateProfileTag">Update profile</p>
+        <div className="updateProfileTagContainer">
+          <p className="updateProfileTag">Update profile</p>
+        </div>
         <div className="updateProfileFormContainer">
           <form className="updateProfileForm" onSubmit={handleSubmit}>
             <div className="profileFormGroupContainer">
@@ -170,8 +173,8 @@ const ProfilePage = () => {
           </select>
         </div>
         <div className="groupWrapper">
-          {joinedPosts.map(post => (
-            <ProfilePagePostDesign post={post} />
+          {joinedPosts.map((post, index) => (
+            <ProfilePagePostDesign post={post} key={index} />
           ))}
         </div>
       </div>

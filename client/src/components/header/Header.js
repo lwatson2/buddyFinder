@@ -15,12 +15,10 @@ const Header = props => {
   const token = sessionStorage.getItem("token");
   const parsedUser = JSON.parse(user);
   const viewed = localStorage.getItem("viewed");
-  console.log(viewed);
   useEffect(() => {
     const checkNotications = async () => {
       if (user) {
         const res = await axios.get(`/users/getNotifications/${parsedUser.id}`);
-        console.log(res.data);
         res.data.messages.map(message => {
           fullGroup.map(group => {
             if (
