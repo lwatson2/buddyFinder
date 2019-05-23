@@ -10,7 +10,6 @@ const Login = props => {
 
   const handleLogin = async () => {
     const res = await axios.post("/users/login", values);
-    console.log(res.data);
     if (res.data.err) {
       setLoginErr(res.data.err.message);
     }

@@ -3,6 +3,7 @@ import axios from "axios";
 import { PostContext } from "./../context/PostContext";
 import HomePagePostDesign from "../homepagePostDesign/HomePagePostDesgin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { sendSubscription, subscribePush } from "../../webPushConfig";
 
 //xbox color hsl(120, 100%, 47%)
 // Steam color #1b2838
@@ -33,6 +34,7 @@ const Homepage = props => {
       setData({ posts: reversedArray });
       //If user is logged in check to see if they are apart of current group members array
       if (user) {
+        sendSubscription();
         const joinedPosts = joined.groupId;
         const groupMembers = joined.groupMembers;
         res.data.posts.map(post => {

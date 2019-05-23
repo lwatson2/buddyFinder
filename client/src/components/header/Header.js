@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { withRouter } from "react-router";
 import { PostContext } from "./../context/PostContext";
+import { subscribePush } from "../../webPushConfig";
 
 const Header = props => {
   const [showNav, setshowNav] = useState(false);
@@ -28,6 +29,7 @@ const Header = props => {
               viewed !== true
             ) {
               setNewNotification(true);
+              subscribePush();
             }
           });
         });
