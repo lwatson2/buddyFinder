@@ -29,7 +29,6 @@ const Header = props => {
               viewed !== true
             ) {
               setNewNotification(true);
-              subscribePush();
             }
           });
         });
@@ -37,7 +36,12 @@ const Header = props => {
     };
     checkNotications();
   }, [fullGroup]);
-
+  useEffect(() => {
+    if (newNotification) {
+      console.log("object");
+      subscribePush();
+    }
+  }, [newNotification]);
   const handleLogout = async () => {
     sessionStorage.removeItem("user");
     sessionStorage.removeItem("token");
