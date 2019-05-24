@@ -1,4 +1,4 @@
-import { PUBLIC_VAPID_KEY } from "./keys";
+import { PUBLIC_VAPID_KEY } from "./key";
 let subscription;
 const publicVapidKey = PUBLIC_VAPID_KEY;
 
