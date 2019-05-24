@@ -16,6 +16,7 @@ const Login = props => {
     if (res.data.token) {
       sessionStorage.setItem("token", res.data.token);
       sessionStorage.setItem("user", JSON.stringify(res.data.user));
+      sessionStorage.removeItem("isAuth");
       props.history.push("/");
     }
   };

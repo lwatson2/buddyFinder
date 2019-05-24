@@ -1,7 +1,6 @@
-import axios from "axios";
+import { PUBLIC_VAPID_KEY } from "./keys";
 let subscription;
-const publicVapidKey =
-  "BIZR7NyJbK3dFsqILgaZH-TNcfJQR9mhVzhjDu1e2a3r-7EDSLgwGvPOdXaBkppfqjUJ_Xw1TiSZ4g18o0EvmKU";
+const publicVapidKey = PUBLIC_VAPID_KEY;
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -42,7 +41,7 @@ export async function sendSubscription() {
   }
 }
 export async function subscribePush() {
-  await fetch("/register", {
+  await fetch("/sendNotification", {
     method: "POST",
     body: JSON.stringify(subscription),
     headers: {

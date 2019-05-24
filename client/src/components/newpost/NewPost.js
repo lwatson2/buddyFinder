@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import useForm from "../helpers/FormHelper";
 import validate from "../helpers/NewPostValidationRules";
 import "./NewPost.css";
@@ -21,7 +21,6 @@ const NewPost = props => {
       currentGroupMembers: parsedUser
     };
     const res = await axios.post("/posts/newpost", data);
-    console.log(res.data);
     if (res.data.err) {
       setNewPostError(true);
     }

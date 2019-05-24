@@ -11,7 +11,7 @@ const ProfilePage = () => {
   const [joinedPosts, setJoinedPosts] = useState([]);
   const [user, setUser] = useState({});
   const usercreds = sessionStorage.getItem("user");
-  const [fullGroup, setFullGroup] = useContext(PostContext);
+  const [fullGroup] = useContext(PostContext);
   const parsedUser = JSON.parse(usercreds);
 
   useEffect(() => {
@@ -39,15 +39,13 @@ const ProfilePage = () => {
       gamertag: values.gamertag,
       system: values.system
     });
-    console.log(parsedUser.id);
     const res = await axios.get(`/users/getuser/${parsedUser.id}`);
     sessionStorage.setItem("user", JSON.stringify(res.data.user));
     setUser(res.data.user);
   };
   const setFilter = async e => {
-    let { name, value } = e.target;
+    let { value } = e.target;
     const response = await axios.get(`/posts/fetchUserPosts/${parsedUser.id}`);
-    console.log(value);
     let newArray = response.data.posts;
     if (value === "created") {
       let filtered = newArray.filter(post => post.id === parsedUser.id);
@@ -67,10 +65,7 @@ const ProfilePage = () => {
       return setJoinedPosts(newArray);
     }
   };
-  const { values, errors, handleChange, handleSubmit } = useForm(
-    handleSave,
-    validate
-  );
+  const { values, handleChange, handleSubmit } = useForm(handleSave, validate);
   return (
     <main className="profilePageContainer">
       <div className="profileDetailsContainer">

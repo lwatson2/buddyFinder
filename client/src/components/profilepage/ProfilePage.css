@@ -68,6 +68,7 @@
 .myMessagesTag {
   margin-left: 8px;
   width: 100px;
+  color: hsl(210, 20%, 25%);
   text-align: left;
 }
 .messagesContainer {
@@ -255,5 +256,8 @@
   }
   .profileFormGroupContainer {
     width: auto;
+  }
+  .profileDetailsContainer {
+    width: 60%;
   }
 }

@@ -81,7 +81,7 @@ const Register = props => {
           </div>
           <div className="formSelectGroup">
             <label className="selectLabel" htmlFor="system">
-              What system do you play on?
+              What platform do you play on?
             </label>
             <select
               className="selectButton"

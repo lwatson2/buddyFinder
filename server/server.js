@@ -18,7 +18,7 @@ const server = app.listen(PORT, () =>
   console.log(`server started on port ${PORT}`)
 );
 app.use(express.static(path.join(__dirname, "..", "client")));
-app.post("/register", (req, res) => {
+app.post("/sendNotification", (req, res) => {
   // Get pushSubscription object
   const subscription = req.body;
   // Send 201 - resource created

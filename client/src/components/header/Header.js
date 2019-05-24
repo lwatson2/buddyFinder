@@ -10,7 +10,7 @@ import { subscribePush } from "../../webPushConfig";
 const Header = props => {
   const [showNav, setshowNav] = useState(false);
   const [newNotification, setNewNotification] = useState(false);
-  const [fullGroup, setFullGroup] = useContext(PostContext);
+  const [fullGroup] = useContext(PostContext);
 
   const user = sessionStorage.getItem("user");
   const token = sessionStorage.getItem("token");
@@ -20,7 +20,7 @@ const Header = props => {
     const checkNotications = async () => {
       if (user) {
         const res = await axios.get(`/users/getNotifications/${parsedUser.id}`);
-        res.data.messages.map(message => {
+        res.data.messages.forEach(message => {
           fullGroup.map(group => {
             if (
               message.postId === group.postId &&
@@ -28,7 +28,9 @@ const Header = props => {
               viewed &&
               viewed !== true
             ) {
-              setNewNotification(true);
+              return setNewNotification(true);
+            } else {
+              return null;
             }
           });
         });
@@ -38,7 +40,6 @@ const Header = props => {
   }, [fullGroup]);
   useEffect(() => {
     if (newNotification) {
-      console.log("object");
       subscribePush();
     }
   }, [newNotification]);

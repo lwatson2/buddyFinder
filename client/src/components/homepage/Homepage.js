@@ -3,7 +3,7 @@ import axios from "axios";
 import { PostContext } from "./../context/PostContext";
 import HomePagePostDesign from "../homepagePostDesign/HomePagePostDesgin";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { sendSubscription, subscribePush } from "../../webPushConfig";
+import { sendSubscription } from "../../webPushConfig";
 
 //xbox color hsl(120, 100%, 47%)
 // Steam color #1b2838
@@ -37,7 +37,7 @@ const Homepage = props => {
         sendSubscription();
         const joinedPosts = joined.groupId;
         const groupMembers = joined.groupMembers;
-        res.data.posts.map(post => {
+        res.data.posts.forEach(post => {
           if (post.currentGroupMembers.length >= post.groupLimit) {
             setFullGroup(prevState => [
               ...prevState,
@@ -48,7 +48,7 @@ const Homepage = props => {
               }
             ]);
           }
-          post.currentGroupMembers.map(member => {
+          post.currentGroupMembers.forEach(member => {
             // If the parsed users gamertag(i.e. their creds)  is the same as a one in the current group members add the post id and thier gamertag to the group members state
             if (parsedUser.username === member.username) {
               joinedPosts.push(post._id);
@@ -73,8 +73,8 @@ const Homepage = props => {
       let newArray;
       if (parsedUser) {
         const res = await axios.get(`/users/getNotifications/${parsedUser.id}`);
-        data.posts.map(post => {
-          post.currentGroupMembers.map(member => {
+        data.posts.forEach(post => {
+          post.currentGroupMembers.forEach(member => {
             // check if user is logged in and group is full and a groupmembers username is the same as the current logged in username
             if (
               post.currentGroupMembers.length >= post.groupLimit &&
@@ -119,7 +119,7 @@ const Homepage = props => {
               title: post.title,
               id: parsedUser.id
             });
-            localStorage.setItem("viewed", false);
+            return localStorage.setItem("viewed", false);
           });
         }
       }
@@ -156,7 +156,7 @@ const Homepage = props => {
     });
     //Add their creds to the currentGroupMmebers state to be shown on the post list
     const posts = data.posts;
-    posts.map(post => {
+    posts.forEach(post => {
       if (post._id === postId) {
         return post.currentGroupMembers.push(parsedUser);
       }
@@ -168,11 +168,7 @@ const Homepage = props => {
   };
   const checkIfJoined = (post, currentMembers) => {
     if (post.currentGroupMembers.length >= post.groupLimit) {
-      return (
-        <button className="joinButton" disabled={true}>
-          Full
-        </button>
-      );
+      return <button className="joinButton">Full</button>;
     } else if (
       // Check if group members state contains the post id and if the group members state contains the users gamertag to show they've already joined
       (parsedUser &&
