@@ -40,7 +40,7 @@ app.post("/sendNotification", (req, res) => {
 //MongoDB config
 
 mongoose
-  .connect(db, { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI || db, { useNewUrlParser: true })
   .then(() => console.log("mongodb connected"))
   .catch(err => console.log(err));
 
