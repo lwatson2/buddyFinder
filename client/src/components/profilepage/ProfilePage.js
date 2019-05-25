@@ -28,6 +28,7 @@ const ProfilePage = () => {
       const response = await axios.get(
         `/posts/fetchUserPosts/${parsedUser.id}`
       );
+      const reversed = response.data.posts.reverse();
       setJoinedPosts(response.data.posts);
     };
     getMessages();
@@ -49,20 +50,24 @@ const ProfilePage = () => {
     let newArray = response.data.posts;
     if (value === "created") {
       let filtered = newArray.filter(post => post.id === parsedUser.id);
-      return setJoinedPosts(filtered);
+      let reversed = filtered.reverse();
+      return setJoinedPosts(reversed);
     }
     if (value === "joined") {
       let filtered = newArray.filter(post => post.id !== parsedUser.id);
-      return setJoinedPosts(filtered);
+      let reversed = filtered.reverse();
+      return setJoinedPosts(reversed);
     }
     if (value === "full") {
       let filtered = newArray.filter(
         post => post.currentGroupMembers.length >= post.groupLimit
       );
-      return setJoinedPosts(filtered);
+      let reversed = filtered.reverse();
+      return setJoinedPosts(reversed);
     }
     if (value === "all") {
-      return setJoinedPosts(newArray);
+      let reversed = newArray.reverse();
+      return setJoinedPosts(reversed);
     }
   };
   const { values, handleChange, handleSubmit } = useForm(handleSave, validate);
