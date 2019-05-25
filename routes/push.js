@@ -6,11 +6,11 @@ const publicKey = require("../config/keys").PUBLIC_KEY;
 const privateKey = require("../config/keys").PRIVATE_KEY;
 const path = require("path");
 
-webpush.setGCMAPIKey(googleKey);
+webpush.setGCMAPIKey(process.env.GOOGLE_ACCESS_KEY || googleKey);
 webpush.setVapidDetails(
   "mailto:loganawatson2@gmail.com",
-  publicKey,
-  privateKey
+  process.env.PUBLIC_KEY || publicKey,
+  process.env.PRIVATE_KEY || privateKey
 );
 
 module.exports = router;
