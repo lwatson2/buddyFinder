@@ -94,17 +94,22 @@ router.post("/login", (req, res, next) => {
 
     if (user) {
       // If there's a user sign a jsonwebtoken with their creds and send that back to the client
-      jwt.sign({ user }, "mysecretkey", { expiresIn: "1d" }, (err, token) => {
-        res.json({
-          token,
-          user: {
-            username: user.username,
-            gamertag: user.gamertag,
-            system: user.system,
-            id: user._id
-          }
-        });
-      });
+      jwt.sign(
+        { user },
+        process.env.SECRET || "mysecretkey",
+        { expiresIn: "1d" },
+        (err, token) => {
+          res.json({
+            token,
+            user: {
+              username: user.username,
+              gamertag: user.gamertag,
+              system: user.system,
+              id: user._id
+            }
+          });
+        }
+      );
     } else {
       res.json({
         err: info
