@@ -6,6 +6,7 @@ import axios from "axios";
 
 const NewPost = props => {
   const [newPostError, setNewPostError] = useState(false);
+  console.log(errors);
   const user = sessionStorage.getItem("user");
   const parsedUser = JSON.parse(user);
   const handleNewPostSubmit = async () => {

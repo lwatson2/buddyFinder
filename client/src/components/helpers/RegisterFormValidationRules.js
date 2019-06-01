@@ -24,6 +24,15 @@ const validate = values => {
   if (!values.system) {
     errors.system = "System is required";
   }
+  if (
+    (values.system && values.system !== "Playstation") ||
+    "Xbox" ||
+    "Steam" ||
+    "Switch"
+  ) {
+    console.log("object");
+    errors.system = "Please only select systems listed";
+  }
   return errors;
 };
 

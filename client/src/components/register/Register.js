@@ -98,6 +98,11 @@ const Register = props => {
               <option value="Steam">Steam</option>
               <option value="Switch">Switch</option>
             </select>
+            {errors.system && (
+              <div className="registerErrorMessage">
+                <span>{errors.system}</span>
+              </div>
+            )}
           </div>
 
           <button className="registerSubmitBtn" type="submit">
