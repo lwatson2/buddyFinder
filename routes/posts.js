@@ -13,6 +13,18 @@ router.post("/newpost", async (req, res) => {
     currentGroupMembers
   } = req.body;
   const { gamertag, id, system } = currentGroupMembers;
+  if (!system.includes("Playstation", "Xbox", "Switch", "Steam")) {
+    return res.json({
+      err: true,
+      errorMessage: "Please only use prompted systems."
+    });
+  }
+  if (groupLimit >= 10) {
+    return res.json({
+      err: true,
+      errorMessage: "Please select number from prompted list"
+    });
+  }
 
   const newPost = new Post({
     username,

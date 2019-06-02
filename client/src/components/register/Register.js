@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import useForm from "../helpers/FormHelper";
 import validate from "../helpers/RegisterFormValidationRules";
 import "./Register.css";
@@ -6,10 +6,14 @@ import axios from "axios";
 import { withRouter } from "react-router";
 
 const Register = props => {
+  const [err, setError] = useState(false);
+  const [errMsg, setErrMsg] = useState("");
   const handleRegister = async () => {
     const res = await axios.post("/users/register", values);
     if (res.data.err) {
-      //Do something blah
+      console.log(res.data.errMsg);
+      setError(true);
+      setErrMsg(res.data.errMsg);
     }
     sessionStorage.setItem("isAuth", true);
     props.history.push("/login");
@@ -21,6 +25,7 @@ const Register = props => {
   return (
     <div className="container">
       <div className="form-wrapper">
+        {err && <div className="registerErrorMessage">{errMsg}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label className="formLabel" htmlFor="username">

@@ -6,7 +6,8 @@ import axios from "axios";
 
 const NewPost = props => {
   const [newPostError, setNewPostError] = useState(false);
-  console.log(errors);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const user = sessionStorage.getItem("user");
   const parsedUser = JSON.parse(user);
   const handleNewPostSubmit = async () => {
@@ -24,6 +25,8 @@ const NewPost = props => {
     const res = await axios.post("/posts/newpost", data);
     if (res.data.err) {
       setNewPostError(true);
+      setErrorMessage(res.data.errMsg);
+      console.log(res.data.errMsg);
     }
     if (res.data.postCreated) {
       props.history.push("/");
@@ -38,7 +41,7 @@ const NewPost = props => {
       <div className="newPostFormContainer">
         {newPostError && (
           <div className="newPostCreateErrorWrapper">
-            <span>Oops! Something went wrong.</span>
+            <span>{errorMessage}</span>
           </div>
         )}
         <form onSubmit={handleSubmit}>

@@ -54,7 +54,13 @@ passport.deserializeUser((id, done) => {
 //Registers user
 router.post("/register", (req, res) => {
   const { username, password, gamertag, system } = req.body;
-
+  if (!system.includes("Playstation", "Xbox", "Switch", "Steam")) {
+    console.log("fal");
+    return res.json({
+      err: true,
+      errMsg: "Please only select the listed systems"
+    });
+  }
   //Checks if Username already exists
   User.findOne({ username }).then(user => {
     if (user) {

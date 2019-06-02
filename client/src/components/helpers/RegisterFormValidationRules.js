@@ -22,16 +22,13 @@ const validate = values => {
     errors.password = "Password cannot be greater than 50 characters.";
   }
   if (!values.system) {
-    errors.system = "System is required";
+    errors.system = "Please select a system.";
   }
   if (
-    (values.system && values.system !== "Playstation") ||
-    "Xbox" ||
-    "Steam" ||
-    "Switch"
+    values.system &&
+    !values.system.includes("Playstation" || "Xbox" || "Steam" || "Switch")
   ) {
-    console.log("object");
-    errors.system = "Please only select systems listed";
+    errors.system = "Please select a system from the list.";
   }
   return errors;
 };
