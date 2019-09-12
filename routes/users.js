@@ -170,6 +170,7 @@ router.get(`/getNotifications/:id`, async (req, res) => {
     }
   });
 });
+//
 router.post("/updateMessages", async (req, res) => {
   const { id, fullGroup } = req.body;
   const user = await User.findOne({ _id: id });

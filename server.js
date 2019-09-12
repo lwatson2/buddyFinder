@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const sesion = require("express-session");
-const db = require("./config/keys").MONGODB_URI;
 const user = require("./routes/users");
 const post = require("./routes/posts");
 const path = require("path");
@@ -11,7 +10,7 @@ const router = express.Router();
 const webpush = require("web-push");
 
 //Server config
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 const app = express();
 //Middleware
 app.use(bodyParser.json());
@@ -40,7 +39,7 @@ app.post("/sendNotification", (req, res) => {
 //MongoDB config
 
 mongoose
-  .connect(process.env.MONGODB_URI || db, { useNewUrlParser: true })
+  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then(() => console.log("mongodb connected"))
   .catch(err => console.log(err));
 
